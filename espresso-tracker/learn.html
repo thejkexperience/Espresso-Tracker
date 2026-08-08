@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The JK Espresso Tracker — Learn</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="topbar" id="topbar"></header>
+
+  <main class="app-shell">
+    <div class="page-header">
+      <div class="eyebrow">Learn</div>
+      <h1>Coffee history &amp; styles</h1>
+      <p class="muted">Where coffee came from, and how to make its most popular styles at home.</p>
+    </div>
+
+    <div class="section">
+      <h2>A short history of coffee</h2>
+      <div class="timeline" id="history-timeline"></div>
+    </div>
+
+    <div class="section">
+      <div class="toolbar">
+        <h2 style="margin:0;">Drink styles &amp; how to make them</h2>
+        <div class="spacer"></div>
+        <input type="search" id="search-styles" placeholder="Search styles..." />
+      </div>
+      <div class="catalog-grid" id="styles-grid"></div>
+    </div>
+  </main>
+
+  <nav id="bottomnav"></nav>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/learn.js"></script>
+</body>
+</html>

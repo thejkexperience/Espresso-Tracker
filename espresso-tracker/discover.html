@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The JK Espresso Tracker — Discover</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="topbar" id="topbar"></header>
+
+  <main class="app-shell">
+    <div class="page-header">
+      <div class="eyebrow">Discover</div>
+      <h1>Find new beans &amp; connect with the community</h1>
+      <p class="muted">Notable specialty roasters, plus blogs and groups to share tips and tricks with other home baristas.</p>
+    </div>
+
+    <div class="card mb-16">
+      <div class="flex-between" style="flex-wrap:wrap;gap:10px;">
+        <div>
+          <h3 style="margin-bottom:2px;">Looking for roasters near you?</h3>
+          <p class="muted" style="margin:0;">Searches OpenStreetMap's free directory for coffee roasters and shops close to your location — no account or map API key needed.</p>
+        </div>
+        <button class="btn btn-accent" id="find-nearby-btn">📍 Find roasters near me</button>
+      </div>
+      <div id="nearby-status" class="muted mt-16" style="display:none;"></div>
+      <div class="catalog-grid mt-16" id="nearby-results"></div>
+    </div>
+
+    <div class="section">
+      <h2>Roaster directory</h2>
+      <p class="muted">A starter list of well-regarded specialty roasters that ship nationwide and/or have physical storefronts. Add your local favorites to your bean library once you've tried them.</p>
+      <div class="catalog-grid" id="roaster-grid"></div>
+    </div>
+
+    <div class="section">
+      <h2>Blogs &amp; communities</h2>
+      <p class="muted">Places to ask questions, read brewing guides, and swap tips with other home baristas.</p>
+      <div class="catalog-grid" id="community-grid"></div>
+    </div>
+  </main>
+
+  <nav id="bottomnav"></nav>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/discover.js"></script>
+</body>
+</html>

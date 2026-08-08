@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The JK Espresso Tracker — Recipes</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="topbar" id="topbar"></header>
+
+  <main class="app-shell">
+    <div class="page-header">
+      <div class="eyebrow">Recipes</div>
+      <h1>Brew recipes</h1>
+      <p class="muted">Starter recipes for classic espresso drinks, plus any you've saved yourself.</p>
+    </div>
+
+    <div class="toolbar">
+      <input type="search" id="search-recipes" placeholder="Search recipes..." />
+      <select id="filter-style">
+        <option value="">All styles</option>
+      </select>
+      <div class="spacer"></div>
+      <button class="btn btn-accent" id="add-recipe-btn">+ Add your own recipe</button>
+    </div>
+
+    <div class="catalog-grid" id="recipe-grid"></div>
+  </main>
+
+  <div class="modal-backdrop" id="recipe-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="recipe-modal-title">Recipe</h2>
+        <button class="modal-close" id="recipe-modal-close">✕</button>
+      </div>
+      <div id="recipe-modal-body"></div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="add-recipe-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Add your own recipe</h2>
+        <button class="modal-close" id="add-recipe-close">✕</button>
+      </div>
+      <form id="add-recipe-form">
+        <div class="field">
+          <label for="r-name">Recipe name *</label>
+          <input type="text" id="r-name" required />
+        </div>
+        <div class="field-grid">
+          <div class="field">
+            <label for="r-style">Style</label>
+            <input type="text" id="r-style" placeholder="e.g. Espresso, Milk-based, Filter" />
+          </div>
+          <div class="field">
+            <label for="r-ratio">Ratio</label>
+            <input type="text" id="r-ratio" placeholder="e.g. 1:2" />
+          </div>
+          <div class="field">
+            <label for="r-dose">Dose / yield</label>
+            <input type="text" id="r-dose" placeholder="e.g. 18g in, 36g out" />
+          </div>
+          <div class="field">
+            <label for="r-time">Time</label>
+            <input type="text" id="r-time" placeholder="e.g. 27 sec" />
+          </div>
+        </div>
+        <div class="field">
+          <label for="r-instructions">Instructions</label>
+          <textarea id="r-instructions" placeholder="Step-by-step instructions..."></textarea>
+        </div>
+        <div class="field">
+          <label for="r-tags">Tags (comma separated)</label>
+          <input type="text" id="r-tags" placeholder="e.g. milk, iced, summer" />
+        </div>
+        <button type="submit" class="btn btn-primary">Save recipe</button>
+      </form>
+    </div>
+  </div>
+
+  <nav id="bottomnav"></nav>
+
+  <script src="js/supabase-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/cloud-data.js"></script>
+  <script src="js/recipes.js"></script>
+</body>
+</html>

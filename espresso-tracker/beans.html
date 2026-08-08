@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The JK Espresso Tracker — Bean Library</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="topbar" id="topbar"></header>
+
+  <main class="app-shell">
+    <div class="page-header">
+      <div class="eyebrow">Bean library</div>
+      <h1>Your beans</h1>
+      <p class="muted">Notes, roast type, source, and roaster history for every bean you've brewed.</p>
+    </div>
+
+    <form class="card" id="bean-form">
+      <input type="hidden" id="bean-id" />
+      <h3 id="bean-form-title">Add a bean</h3>
+      <div class="field-grid">
+        <div class="field">
+          <label for="bean-name-input">Bean name *</label>
+          <input type="text" id="bean-name-input" required placeholder="e.g. Ethiopia Yirgacheffe Natural" />
+        </div>
+        <div class="field">
+          <label for="bean-roaster">Roaster</label>
+          <input type="text" id="bean-roaster" placeholder="e.g. Onyx Coffee Lab" />
+        </div>
+        <div class="field">
+          <label for="bean-roast-type">Roast type</label>
+          <select id="bean-roast-type">
+            <option value="">— select —</option>
+            <option>Light</option>
+            <option>Light-Medium</option>
+            <option>Medium</option>
+            <option>Medium-Dark</option>
+            <option>Dark</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="bean-source">Origin / source</label>
+          <input type="text" id="bean-source" placeholder="e.g. Guji Zone, Ethiopia" />
+        </div>
+        <div class="field">
+          <label for="bean-process">Process (optional)</label>
+          <input type="text" id="bean-process" placeholder="e.g. Washed, Natural, Honey" />
+        </div>
+        <div class="field">
+          <label for="bean-price">Price paid (optional)</label>
+          <input type="text" id="bean-price" placeholder="e.g. $19 / 12oz" />
+        </div>
+      </div>
+      <div class="field">
+        <label for="bean-history">Roaster history / background</label>
+        <textarea id="bean-history" placeholder="What's the story of this roaster or farm?"></textarea>
+      </div>
+      <div class="field">
+        <label for="bean-notes">Tasting notes</label>
+        <textarea id="bean-notes" placeholder="e.g. Blueberry, jasmine, bright acidity, light body"></textarea>
+      </div>
+      <div class="flex gap-8">
+        <button type="submit" class="btn btn-primary">Save bean</button>
+        <button type="button" class="btn btn-outline" id="cancel-bean-edit" style="display:none;">Cancel edit</button>
+        <button type="button" class="btn btn-danger" id="delete-bean" style="display:none;">Delete</button>
+      </div>
+    </form>
+
+    <div class="section">
+      <div class="toolbar">
+        <h2 style="margin:0;">Library</h2>
+        <div class="spacer"></div>
+        <input type="search" id="search-beans" placeholder="Search beans, roasters, notes..." />
+      </div>
+      <div class="catalog-grid" id="bean-grid"></div>
+    </div>
+  </main>
+
+  <nav id="bottomnav"></nav>
+
+  <script src="js/supabase-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/cloud-data.js"></script>
+  <script src="js/beans.js"></script>
+</body>
+</html>

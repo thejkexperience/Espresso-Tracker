@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The JK Espresso Tracker — Set up cloud sync</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">☕</span>
+        <span>The JK Espresso Tracker</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <div class="page-header">
+      <div class="eyebrow">One-time setup</div>
+      <h1>Connect your cloud account</h1>
+      <p class="muted">Your Brew Log, Beans, and personal Recipes now live in a private cloud database so they sync across your phone and computer. That takes a couple of one-time setup steps before it'll work.</p>
+    </div>
+
+    <div class="card">
+      <h3>1. Create a free Supabase project</h3>
+      <p>Go to <a href="https://supabase.com" target="_blank" rel="noopener">supabase.com</a>, sign up (free), and create a new project. Pick any name/region and set a database password (you won't need to remember it day-to-day).</p>
+
+      <h3>2. Run the schema script</h3>
+      <p>In your new project, open <strong>SQL Editor → New query</strong>, paste the contents of <code>supabase/schema.sql</code> (included in this app's folder), and click <strong>Run</strong>. This creates your tables and locks them down so only you can see your own data.</p>
+
+      <h3>3. Create the photo storage bucket</h3>
+      <p>The schema script already creates a private <code>brew-photos</code> storage bucket and its access policies for you — no extra steps needed here.</p>
+
+      <h3>4. Copy in your project keys</h3>
+      <p>In Supabase go to <strong>Project Settings → API</strong>. Copy the <strong>Project URL</strong> and the <strong>anon public</strong> key. Open <code>js/supabase-config.js</code> in this app's folder and paste them in:</p>
+      <pre style="background:var(--color-surface-2);padding:12px;border-radius:8px;overflow-x:auto;">const SUPABASE_URL = "https://your-project.supabase.co";
+const SUPABASE_ANON_KEY = "your-anon-public-key";</pre>
+      <p class="muted">Both values are safe to keep in this file — they only allow what the Row Level Security policies in schema.sql permit (a signed-in user can only ever see their own rows).</p>
+
+      <h3>5. Reload and sign up</h3>
+      <p>Save the file, refresh this page (or reopen <code>index.html</code>), and you'll be able to create your account and start syncing.</p>
+
+      <a class="btn btn-primary mt-16" href="index.html">I've finished setup — take me back</a>
+    </div>
+  </main>
+</body>
+</html>

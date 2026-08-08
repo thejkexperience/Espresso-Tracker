@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The JK Espresso Tracker — Sign in</title>
+<link rel="stylesheet" href="css/style.css" />
+<style>
+  .auth-wrap { max-width: 420px; margin: 60px auto; }
+  .auth-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+  .auth-tabs button { flex: 1; }
+</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">☕</span>
+        <span>The JK Espresso Tracker</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <div class="auth-wrap">
+      <div class="card">
+        <div class="auth-tabs">
+          <button type="button" class="btn btn-primary" id="tab-signin">Sign in</button>
+          <button type="button" class="btn btn-outline" id="tab-signup">Create account</button>
+        </div>
+
+        <h2 id="auth-title">Sign in</h2>
+        <p class="muted" id="auth-subtitle">Access your brew log, beans, and recipes from any device.</p>
+
+        <form id="auth-form">
+          <div class="field">
+            <label for="auth-email">Email</label>
+            <input type="text" id="auth-email" required autocomplete="email" />
+          </div>
+          <div class="field">
+            <label for="auth-password">Password</label>
+            <input type="password" id="auth-password" required autocomplete="current-password" minlength="6" />
+          </div>
+          <div id="auth-error" class="muted" style="color:var(--color-danger);display:none;"></div>
+          <div id="auth-success" class="muted" style="color:var(--color-success);display:none;"></div>
+          <button type="submit" class="btn btn-primary" id="auth-submit" style="width:100%;margin-top:8px;">Sign in</button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/supabase-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>
