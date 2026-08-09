@@ -1,6 +1,6 @@
 # The JK Espresso Tracker
 
-A web app for tracking espresso brews, beans, gear, and recipes — built for TheJKExperience. Works on desktop and mobile browsers (responsive layout). Your Brew Log, Beans, and personal Recipes now sync across devices through a free Supabase account; Gear, Discover, and Learn stay fully local and work with zero setup.
+A web app for tracking espresso brews, beans, gear, and recipes — built for TheJKExperience. Works on desktop and mobile browsers (responsive layout), and can be installed as an app on your phone's home screen (see [Install it as a mobile app](#install-it-as-a-mobile-app) below). Your Brew Log, Beans, and personal Recipes now sync across devices through a free Supabase account; Gear, Discover, and Learn stay fully local and work with zero setup.
 
 ## Quick start
 
@@ -45,6 +45,15 @@ Reload `index.html`, click **Sign in → Create account**, and you're syncing.
 - **Gear, Discover, and Learn** are unaffected by any of this — they're static reference content that ships with the app and need no login or internet-dependent database, though the live "near me" search does need an internet connection and location permission.
 - There's currently no offline mode for the personal-data pages (Home, Brew Log, Beans) — they need an internet connection to load and save, since that's what makes the cross-device sync possible. If offline logging turns out to matter a lot in practice, that's a reasonable next addition (a local queue that syncs once you're back online).
 
+## Install it as a mobile app
+
+The site is now a PWA (Progressive Web App) — you can add it to your phone's home screen and it opens full-screen with its own icon, no App Store needed:
+
+- **iPhone (Safari):** open the site → tap the **Share** icon → **Add to Home Screen** → **Add**.
+- **Android (Chrome):** open the site → tap the **⋮** menu → **Add to Home screen** (or **Install app**) → **Add**.
+
+Once installed, it launches like a normal app and the static pages (Gear, Discover, Learn, and the app shell itself) keep working even with no signal; Brew Log/Beans/Recipes still need internet since they sync through Supabase.
+
 ## Notes on the "near me" search
 
 It uses the OpenStreetMap Overpass API, which is free and doesn't require an account, but its coverage depends on volunteer mapping in your area — dense cities tend to have great data, some suburban/rural areas less so. Each result links out to both OpenStreetMap and a Google Maps search so you can cross-check hours, reviews, and directions.
@@ -54,4 +63,4 @@ It uses the OpenStreetMap Overpass API, which is free and doesn't require an acc
 - Offline queueing for Brew Log/Beans so logging works without signal, syncing once you're back online
 - Charts of rating/extraction trends over time
 - Google or magic-link sign-in as additional options alongside email/password
-- A packaged mobile app (e.g. via a simple wrapper) if you want it on the App Store/Play Store
+- A real App Store/Play Store listing (wrapping this same code with Capacitor) if you outgrow the home-screen-install version
