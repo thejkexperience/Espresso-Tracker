@@ -42,6 +42,42 @@ body {
   padding-bottom: 24px;
 }
 
+/* ---------- Espresso-themed page backgrounds ---------- */
+/* Each page shows a full-bleed photo (beans, roasters, machines, cups) tinted
+   with the app's cream palette so cards and text stay easy to read. */
+
+body {
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: cover;
+  min-height: 100vh;
+}
+
+body.page-home {
+  background-image: linear-gradient(180deg, rgba(250,246,240,0.90) 0%, rgba(250,246,240,0.96) 380px, var(--color-bg) 700px), url("images/backgrounds/home.jpg");
+}
+body.page-brewlog {
+  background-image: linear-gradient(180deg, rgba(250,246,240,0.90) 0%, rgba(250,246,240,0.96) 380px, var(--color-bg) 700px), url("images/backgrounds/brewlog.jpg");
+}
+body.page-beans {
+  background-image: linear-gradient(180deg, rgba(250,246,240,0.90) 0%, rgba(250,246,240,0.96) 380px, var(--color-bg) 700px), url("images/backgrounds/beans.jpg");
+}
+body.page-recipes {
+  background-image: linear-gradient(180deg, rgba(250,246,240,0.90) 0%, rgba(250,246,240,0.96) 380px, var(--color-bg) 700px), url("images/backgrounds/recipes.jpg");
+}
+body.page-gear {
+  background-image: linear-gradient(180deg, rgba(250,246,240,0.90) 0%, rgba(250,246,240,0.96) 380px, var(--color-bg) 700px), url("images/backgrounds/gear.jpg");
+}
+body.page-discover {
+  background-image: linear-gradient(180deg, rgba(250,246,240,0.90) 0%, rgba(250,246,240,0.96) 380px, var(--color-bg) 700px), url("images/backgrounds/discover.jpg");
+}
+body.page-learn {
+  background-image: linear-gradient(180deg, rgba(250,246,240,0.90) 0%, rgba(250,246,240,0.96) 380px, var(--color-bg) 700px), url("images/backgrounds/learn.jpg");
+}
+body.page-login {
+  background-image: linear-gradient(180deg, rgba(74,50,34,0.55) 0%, rgba(250,246,240,0.94) 420px, var(--color-bg) 700px), url("images/backgrounds/login.jpg");
+}
+
 a { color: var(--color-primary); text-decoration: none; }
 a:hover { text-decoration: underline; }
 
