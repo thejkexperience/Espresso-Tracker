@@ -53,12 +53,18 @@ create table if not exists public.brews (
   water_temp numeric,
   rating smallint check (rating between 0 and 5),
   feedback text,
+  issue_tags text[],
   recommendation text,
   photo_shot_path text,
   photo_puck_path text,
   photo_packaging_path text,
   created_at timestamptz not null default now()
 );
+
+-- Safe to re-run: adds the issue_tags column if this table already existed
+-- from an earlier version of this schema (e.g. the "what went wrong?"
+-- feedback tags added later — bitter, sour, weak, etc.).
+alter table public.brews add column if not exists issue_tags text[];
 
 alter table public.brews enable row level security;
 
