@@ -14,6 +14,19 @@
 // change, so always confirm on the retailer's site.
 // ===========================================================
 
+const ISSUE_TAGS = [
+  { id: "bitter", label: "Bitter", tip: "Grind coarser and/or shorten the brew time — bitterness usually means over-extraction. Also check your water isn't too hot (aim ~195–205°F) and that the shot isn't running too slow." },
+  { id: "sour", label: "Sour", tip: "Grind finer and/or let the shot run a bit longer — sourness usually means under-extraction. Also check the dose is high enough and the grounds are evenly distributed before tamping." },
+  { id: "weak", label: "Weak / watery", tip: "Increase your dose or use a tighter (lower) ratio so less water passes through the same coffee. A finer grind can also add body and concentration." },
+  { id: "harsh", label: "Harsh / astringent", tip: "Grind slightly coarser to avoid over-extracting fines, and double-check your tamp is level — uneven tamping causes harsh, gritty extraction." },
+  { id: "muddy", label: "Muddy / unclear", tip: "Distribute the grounds more thoroughly before tamping (a WDT tool helps a lot) and make sure the grind isn't too fine, which can muddy flavor clarity." },
+  { id: "channeling", label: "Channeling / uneven flow", tip: "Redistribute and tamp level and firm. A bottomless portafilter helps you see channeling directly; a puck screen or finer, more even grind can also reduce it." },
+  { id: "too_fast", label: "Shot ran too fast", tip: "Grind finer to slow the flow down and land closer to your target time and yield." },
+  { id: "too_slow", label: "Shot ran too slow", tip: "Grind coarser to speed the flow up. Also check your dose isn't too high or your tamp too firm for the basket." },
+  { id: "thin", label: "Thin body", tip: "Try a slightly finer grind and/or a lower (more concentrated) ratio to build more body into the shot." },
+  { id: "too_hot", label: "Tastes burnt / too hot", tip: "Lower your brew temperature a few degrees if your machine allows it, and check the beans aren't a darker roast than your usual — darker roasts extract bitterness faster." }
+];
+
 const STARTER_RECIPES = [
   {
     id: "recipe_classic_espresso",
