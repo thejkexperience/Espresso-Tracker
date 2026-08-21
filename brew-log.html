@@ -124,6 +124,15 @@
           <textarea id="feedback" placeholder="e.g. Bright, a little sour, chocolate finish but thin body..."></textarea>
         </div>
         <div class="field">
+          <label>What went wrong? (optional — tap any that apply)</label>
+          <div class="chip-select" id="issue-tags"></div>
+          <div class="suggestion-box" id="issue-suggestion" style="display:none;">
+            <div class="suggestion-title">Suggested fixes for next brew</div>
+            <ul id="issue-suggestion-list"></ul>
+            <button type="button" class="btn btn-outline btn-sm" id="use-suggestion-btn">Add to recommendation below</button>
+          </div>
+        </div>
+        <div class="field">
           <label for="recommendation">Recommendation for next brew</label>
           <textarea id="recommendation" placeholder="e.g. Grind slightly finer to slow the shot and add body..."></textarea>
         </div>
