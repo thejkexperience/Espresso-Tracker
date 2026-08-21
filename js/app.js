@@ -29,10 +29,10 @@ function renderShell(activePage, opts) {
           <span>The JK Espresso Tracker</span>
         </a>
         <div class="auth-slot" id="auth-slot">${opts.authSlotHtml || ""}</div>
+        <nav class="nav-menu" id="nav-menu">
+          ${NAV_ITEMS.map(item => `<a href="${item.href}" class="${item.href === activePage ? "active" : ""}">${item.icon} ${item.label}</a>`).join("")}
+        </nav>
       </div>
-      <nav class="nav-menu" id="nav-menu">
-        ${NAV_ITEMS.map(item => `<a href="${item.href}" class="${item.href === activePage ? "active" : ""}">${item.icon} ${item.label}</a>`).join("")}
-      </nav>
       <div class="nav-backdrop" id="nav-backdrop"></div>`;
 
     const toggle = document.getElementById("nav-toggle");
