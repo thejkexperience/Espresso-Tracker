@@ -19,21 +19,47 @@ function renderShell(activePage, opts) {
   if (topbar) {
     topbar.innerHTML = `
       <div class="topbar-inner">
+        <button type="button" class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu">
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </button>
         <a class="brand" href="index.html">
           <span class="brand-mark">☕</span>
           <span>The JK Espresso Tracker</span>
         </a>
-        <nav class="primary-nav">
-          ${NAV_ITEMS.map(item => `<a href="${item.href}" class="${item.href === activePage ? "active" : ""}">${item.icon} ${item.label}</a>`).join("")}
-        </nav>
         <div class="auth-slot" id="auth-slot">${opts.authSlotHtml || ""}</div>
-      </div>`;
+      </div>
+      <nav class="nav-menu" id="nav-menu">
+        ${NAV_ITEMS.map(item => `<a href="${item.href}" class="${item.href === activePage ? "active" : ""}">${item.icon} ${item.label}</a>`).join("")}
+      </nav>
+      <div class="nav-backdrop" id="nav-backdrop"></div>`;
+
+    const toggle = document.getElementById("nav-toggle");
+    const menu = document.getElementById("nav-menu");
+    const backdrop = document.getElementById("nav-backdrop");
+    const closeMenu = () => {
+      menu.classList.remove("open");
+      backdrop.classList.remove("open");
+      toggle.setAttribute("aria-expanded", "false");
+    };
+    const openMenu = () => {
+      menu.classList.add("open");
+      backdrop.classList.add("open");
+      toggle.setAttribute("aria-expanded", "true");
+    };
+    toggle.addEventListener("click", () => {
+      menu.classList.contains("open") ? closeMenu() : openMenu();
+    });
+    backdrop.addEventListener("click", closeMenu);
+    menu.querySelectorAll("a").forEach(a => a.addEventListener("click", closeMenu));
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeMenu(); });
   }
+  // The bottom tab bar has been replaced by the hamburger menu above;
+  // keep the (now-unused) #bottomnav element harmless if it's still in a page's HTML.
   if (bottomnav) {
-    bottomnav.className = "bottom-nav";
-    bottomnav.innerHTML = NAV_ITEMS.map(item =>
-      `<a href="${item.href}" class="${item.href === activePage ? "active" : ""}"><span class="icon">${item.icon}</span>${item.label}</a>`
-    ).join("");
+    bottomnav.innerHTML = "";
+    bottomnav.style.display = "none";
   }
 }
 
