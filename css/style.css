@@ -153,7 +153,8 @@ nav.nav-menu {
   flex-direction: column;
   position: absolute;
   top: 100%;
-  left: 16px;
+  left: 0;
+  margin-top: 8px;
   min-width: 220px;
   background: var(--color-primary-dark);
   border-radius: 0 0 var(--radius-md) var(--radius-md);
