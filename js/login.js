@@ -55,7 +55,7 @@ async function onSubmit(e) {
       if (data.session) {
         window.location.href = getRedirectTarget();
       } else {
-        showSuccess("Account created! Check your email to confirm it, then sign in.");
+        showSuccess("Account created! Please check your email for email verification, then come back and sign in.");
         setMode("signin");
       }
     } else {
