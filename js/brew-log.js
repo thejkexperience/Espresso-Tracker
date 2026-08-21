@@ -3,6 +3,7 @@
    =========================================================== */
 
 let currentRating = 0;
+let selectedIssues = new Set();
 
 // Photo state for the form currently being edited.
 // pendingFiles: newly-picked File objects, keyed by slot, not yet uploaded.
@@ -18,6 +19,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   await populateBeanSelect();
   renderRatingInput();
+  renderIssueTags();
   await renderHistory();
   setupPhotoInputs();
   PHOTO_SLOTS.forEach(slot => renderPhotoPreview(slot, null));
@@ -28,6 +30,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("search-brews").addEventListener("input", debounce(renderHistory, 150));
   document.getElementById("sort-brews").addEventListener("change", renderHistory);
   document.getElementById("bean-select").addEventListener("change", onBeanSelectChange);
+  document.getElementById("use-suggestion-btn").addEventListener("click", applyIssueSuggestion);
 
   // deep-link to a specific brew (from dashboard) for quick editing
   const params = new URLSearchParams(window.location.search);
@@ -78,6 +81,50 @@ function updateRatingDisplay() {
   [...el.children].forEach((btn, idx) => {
     btn.classList.toggle("filled", idx < currentRating);
   });
+}
+
+// ---------- Issue tags & suggested fixes ----------
+
+function renderIssueTags() {
+  const el = document.getElementById("issue-tags");
+  el.innerHTML = "";
+  ISSUE_TAGS.forEach(tag => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.textContent = tag.label;
+    btn.dataset.id = tag.id;
+    btn.classList.toggle("selected", selectedIssues.has(tag.id));
+    btn.addEventListener("click", () => {
+      if (selectedIssues.has(tag.id)) selectedIssues.delete(tag.id);
+      else selectedIssues.add(tag.id);
+      btn.classList.toggle("selected");
+      updateIssueSuggestion();
+    });
+    el.appendChild(btn);
+  });
+  updateIssueSuggestion();
+}
+
+function updateIssueSuggestion() {
+  const box = document.getElementById("issue-suggestion");
+  const list = document.getElementById("issue-suggestion-list");
+  if (!selectedIssues.size) {
+    box.style.display = "none";
+    list.innerHTML = "";
+    return;
+  }
+  const tips = ISSUE_TAGS.filter(t => selectedIssues.has(t.id));
+  list.innerHTML = tips.map(t => `<li><strong>${escapeHtml(t.label)}:</strong> ${escapeHtml(t.tip)}</li>`).join("");
+  box.style.display = "block";
+}
+
+function applyIssueSuggestion() {
+  const tips = ISSUE_TAGS.filter(t => selectedIssues.has(t.id)).map(t => t.tip);
+  if (!tips.length) return;
+  const field = document.getElementById("recommendation");
+  const existing = field.value.trim();
+  const addition = tips.join(" ");
+  field.value = existing ? `${existing}\n\n${addition}` : addition;
 }
 
 // ---------- Photos ----------
@@ -191,6 +238,7 @@ async function onSubmitBrew(e) {
       waterTemp: document.getElementById("water-temp").value,
       rating: currentRating,
       feedback: document.getElementById("feedback").value.trim(),
+      issueTags: Array.from(selectedIssues),
       recommendation: document.getElementById("recommendation").value.trim(),
       photoShotPath: existingPaths.shot,
       photoPuckPath: existingPaths.puck,
@@ -228,6 +276,8 @@ async function loadBrewIntoForm(brew) {
   document.getElementById("recommendation").value = brew.recommendation || "";
   currentRating = brew.rating || 0;
   updateRatingDisplay();
+  selectedIssues = new Set(brew.issueTags || []);
+  renderIssueTags();
 
   pendingFiles = { shot: null, puck: null, packaging: null };
   removedSlots = new Set();
@@ -246,6 +296,8 @@ function resetForm() {
   document.getElementById("brew-time-of-day").value = nowTimeStr();
   currentRating = 0;
   updateRatingDisplay();
+  selectedIssues = new Set();
+  renderIssueTags();
   resetPhotoState();
   document.getElementById("cancel-edit").style.display = "none";
   document.getElementById("delete-brew").style.display = "none";
@@ -281,7 +333,8 @@ async function renderHistory() {
 
   if (query) {
     brews = brews.filter(b => {
-      const hay = [b.beanName, b.machineType, b.grinderType, b.grindSize, b.toolsUsed, b.feedback, b.recommendation]
+      const issueLabels = (b.issueTags || []).map(id => (ISSUE_TAGS.find(t => t.id === id) || {}).label || "").join(" ");
+      const hay = [b.beanName, b.machineType, b.grinderType, b.grindSize, b.toolsUsed, b.feedback, b.recommendation, issueLabels]
         .join(" ").toLowerCase();
       return hay.includes(query);
     });
