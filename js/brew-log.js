@@ -31,6 +31,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("sort-brews").addEventListener("change", renderHistory);
   document.getElementById("bean-select").addEventListener("change", onBeanSelectChange);
   document.getElementById("use-suggestion-btn").addEventListener("click", applyIssueSuggestion);
+  document.getElementById("add-bean-close").addEventListener("click", () => toggleModal("add-bean-modal", false));
+  document.getElementById("add-bean-form").addEventListener("submit", onAddBeanFromBrewLog);
+  [...document.querySelectorAll(".modal-backdrop")].forEach(bd => {
+    bd.addEventListener("click", (e) => { if (e.target === bd) bd.classList.remove("open"); });
+  });
 
   // deep-link to a specific brew (from dashboard) for quick editing
   const params = new URLSearchParams(window.location.search);
@@ -44,19 +49,62 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
-async function populateBeanSelect() {
+async function populateBeanSelect(selectedId) {
   const sel = document.getElementById("bean-select");
   const beans = await getBeans();
   sel.innerHTML = `<option value="">— none / use text field —</option>` +
+    `<option value="__new__">+ Add a new bean…</option>` +
     beans.map(b => `<option value="${b.id}">${escapeHtml(b.name)}${b.roaster ? " (" + escapeHtml(b.roaster) + ")" : ""}</option>`).join("");
+  if (selectedId) sel.value = selectedId;
 }
 
 function onBeanSelectChange() {
   const sel = document.getElementById("bean-select");
+  if (sel.value === "__new__") {
+    sel.value = "";
+    toggleModal("add-bean-modal", true);
+    return;
+  }
   if (!sel.value) return;
   getBean(sel.value).then(bean => {
     if (bean) document.getElementById("bean-name").value = bean.name;
   });
+}
+
+// Adding a bean from the brew log opens a modal on top of the in-progress
+// brew form. Only the bean-select and bean-name fields get touched on save —
+// everything else the user has already filled in stays exactly as it was.
+async function onAddBeanFromBrewLog(e) {
+  e.preventDefault();
+  const bean = {
+    name: document.getElementById("nb-name").value.trim(),
+    roaster: document.getElementById("nb-roaster").value.trim(),
+    roastType: document.getElementById("nb-roast-type").value,
+    source: document.getElementById("nb-source").value.trim(),
+    process: document.getElementById("nb-process").value.trim(),
+    price: document.getElementById("nb-price").value.trim(),
+    history: document.getElementById("nb-history").value.trim(),
+    notes: document.getElementById("nb-notes").value.trim()
+  };
+  if (!bean.name) return;
+
+  const submitBtn = e.target.querySelector("button[type=submit]");
+  submitBtn.disabled = true;
+  try {
+    const saved = await saveBean(bean);
+    await populateBeanSelect(saved.id);
+    document.getElementById("bean-name").value = saved.name;
+    document.getElementById("add-bean-form").reset();
+    toggleModal("add-bean-modal", false);
+  } catch (err) {
+    alert("Couldn't save that bean: " + (err.message || err));
+  } finally {
+    submitBtn.disabled = false;
+  }
+}
+
+function toggleModal(id, open) {
+  document.getElementById(id).classList.toggle("open", open);
 }
 
 function renderRatingInput() {
