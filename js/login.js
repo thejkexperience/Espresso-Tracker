@@ -37,6 +37,10 @@ function setMode(mode) {
     ? "Set a password to start syncing your brew log across devices."
     : "Access your brew log, beans, and recipes from any device.";
   document.getElementById("auth-submit").textContent = isSignup ? "Create account" : "Sign in";
+  const firstNameField = document.getElementById("field-firstname");
+  const firstNameInput = document.getElementById("auth-firstname");
+  firstNameField.style.display = isSignup ? "block" : "none";
+  firstNameInput.required = isSignup;
   hideMessages();
 }
 
@@ -45,12 +49,17 @@ async function onSubmit(e) {
   hideMessages();
   const email = document.getElementById("auth-email").value.trim();
   const password = document.getElementById("auth-password").value;
+  const firstName = document.getElementById("auth-firstname").value.trim();
   const submitBtn = document.getElementById("auth-submit");
   submitBtn.disabled = true;
 
   try {
     if (authMode === "signup") {
-      const { data, error } = await supabaseClient.auth.signUp({ email, password });
+      const { data, error } = await supabaseClient.auth.signUp({
+        email,
+        password,
+        options: { data: { first_name: firstName } }
+      });
       if (error) throw error;
       if (data.session) {
         window.location.href = getRedirectTarget();
