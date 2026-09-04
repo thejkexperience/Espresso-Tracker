@@ -160,6 +160,60 @@
     </div>
   </main>
 
+  <div class="modal-backdrop" id="add-bean-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Add a new bean</h2>
+        <button class="modal-close" id="add-bean-close">✕</button>
+      </div>
+      <p class="muted" style="margin-top:-6px;">This saves straight to your bean library and drops right into the brew below — nothing else on this form gets touched.</p>
+      <form id="add-bean-form">
+        <div class="field-grid">
+          <div class="field">
+            <label for="nb-name">Bean name *</label>
+            <input type="text" id="nb-name" required placeholder="e.g. Ethiopia Yirgacheffe Natural" />
+          </div>
+          <div class="field">
+            <label for="nb-roaster">Roaster</label>
+            <input type="text" id="nb-roaster" placeholder="e.g. Onyx Coffee Lab" />
+          </div>
+          <div class="field">
+            <label for="nb-roast-type">Roast type</label>
+            <select id="nb-roast-type">
+              <option value="">— select —</option>
+              <option>Light</option>
+              <option>Light-Medium</option>
+              <option>Medium</option>
+              <option>Medium-Dark</option>
+              <option>Dark</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="nb-source">Origin / source</label>
+            <input type="text" id="nb-source" placeholder="e.g. Guji Zone, Ethiopia" />
+          </div>
+          <div class="field">
+            <label for="nb-process">Process (optional)</label>
+            <input type="text" id="nb-process" placeholder="e.g. Washed, Natural, Honey" />
+          </div>
+          <div class="field">
+            <label for="nb-price">Price paid (optional)</label>
+            <input type="text" id="nb-price" placeholder="e.g. $19 / 12oz" />
+          </div>
+        </div>
+        <div class="field">
+          <label for="nb-history">Roaster history / background</label>
+          <textarea id="nb-history" placeholder="What's the story of this roaster or farm?"></textarea>
+        </div>
+        <div class="field">
+          <label for="nb-notes">Tasting notes</label>
+          <textarea id="nb-notes" placeholder="e.g. Blueberry, jasmine, bright acidity, light body"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Save bean &amp; use it in this brew</button>
+      </form>
+    </div>
+  </div>
+
   <nav id="bottomnav"></nav>
 
   <script src="js/supabase-config.js"></script>
