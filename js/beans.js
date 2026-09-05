@@ -102,8 +102,13 @@ async function renderBeans() {
       ${b.source ? `<div class="muted">${escapeHtml(b.source)}${b.process ? " · " + escapeHtml(b.process) : ""}</div>` : ""}
       ${b.notes ? `<p style="margin-top:6px;">${escapeHtml(truncate(b.notes, 120))}</p>` : ""}
       ${b.price ? `<div class="chip">${escapeHtml(b.price)}</div>` : ""}
+      <a href="dial-in.html?beanId=${encodeURIComponent(b.id)}" class="btn btn-sm btn-outline dial-in-link" style="margin-top:8px;align-self:flex-start;">🎯 Dial in this bag</a>
     </div>
   `).join("");
+
+  el.querySelectorAll(".dial-in-link").forEach(link => {
+    link.addEventListener("click", (e) => e.stopPropagation());
+  });
 
   [...el.querySelectorAll(".catalog-card")].forEach(node => {
     node.addEventListener("click", async () => {
