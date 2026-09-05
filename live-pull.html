@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The JK Espresso Tracker — Live Pull</title>
+<link rel="stylesheet" href="css/style.css" />
+<link rel="manifest" href="manifest.json" />
+<meta name="theme-color" content="#201e1d" />
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj4KPHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIHJ4PSIyMiIgZmlsbD0iIzZGNEUzNyIvPgo8ZWxsaXBzZSBjeD0iNTAiIGN5PSI3OCIgcng9IjI0IiByeT0iNiIgZmlsbD0iI0ZBRjZGMCIvPgo8cG9seWdvbiBwb2ludHM9IjI3LDMyIDczLDMyIDY4LDcyIDMyLDcyIiBmaWxsPSIjRkFGNkYwIi8+CjxlbGxpcHNlIGN4PSI1MCIgY3k9IjMyIiByeD0iMjMiIHJ5PSI1IiBmaWxsPSIjNkY0RTM3Ii8+CjxlbGxpcHNlIGN4PSI1MCIgY3k9IjM0LjUiIHJ4PSIxOCIgcnk9IjMuMyIgZmlsbD0iIzRBMzIyMiIvPgo8cGF0aCBkPSJNNzIsNDAgYTEwLDEwIDAgMCAxIDAsMjAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZBRjZGMCIgc3Ryb2tlLXdpZHRoPSI0Ii8+CjxwYXRoIGQ9Ik00MCwyNiBDMzYsMjAgNDQsMTYgNDAsMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0MwODU1MiIgc3Ryb2tlLXdpZHRoPSIzLjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cGF0aCBkPSJNNTQsMjYgQzUwLDIwIDU4LDE2IDU0LDEwIiBmaWxsPSJub25lIiBzdHJva2U9IiNDMDg1NTIiIHN0cm9rZS13aWR0aD0iMy4yIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPC9zdmc+Cg==" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Espresso Tracker" />
+</head>
+<body class="page-livepull">
+  <div class="livepull-page">
+    <a href="index.html" class="livepull-exit" id="livepull-exit">‹ Home</a>
+
+    <div class="livepull-card">
+      <div class="livepull-head">
+        <div>
+          <div class="livepull-kicker" id="livepull-kicker">Ready to pull</div>
+          <select class="livepull-bean-select" id="livepull-bean-select"></select>
+        </div>
+        <div class="livepull-meta">
+          <input type="number" step="0.1" id="livepull-dose" value="18.0" aria-label="Dose weight in grams" />g in<br>
+          grind <input type="text" id="livepull-grind" value="—" aria-label="Grind setting" style="width:2.6em;" />
+        </div>
+      </div>
+
+      <div class="livepull-ring-wrap">
+        <svg viewBox="0 0 200 200">
+          <circle cx="100" cy="100" r="88" fill="none" stroke="rgba(245,234,216,.14)" stroke-width="9"></circle>
+          <circle id="livepull-band-arc" cx="100" cy="100" r="88" fill="none" stroke="#aebf92" stroke-width="15" opacity="0.5"></circle>
+          <circle id="livepull-progress-ring" cx="100" cy="100" r="88" fill="none" stroke="#c67139" stroke-width="9" stroke-linecap="round" stroke-dasharray="552.9" stroke-dashoffset="552.9"></circle>
+        </svg>
+        <div class="livepull-ring-face">
+          <div class="livepull-elapsed" id="livepull-elapsed">0.0</div>
+          <div class="livepull-elapsed-label">seconds</div>
+          <div class="livepull-yield-row">
+            <input type="number" step="0.1" class="livepull-yield-input" id="livepull-yield" value="0.0" aria-label="Yield weight in grams" />
+            <span class="livepull-yield-unit">g out</span>
+          </div>
+          <div class="livepull-ratio" id="livepull-ratio">—</div>
+        </div>
+      </div>
+
+      <div class="livepull-status-row">
+        <span id="livepull-phase">ready</span>
+        <span id="livepull-target-label">target band 25–30 s</span>
+      </div>
+
+      <div class="livepull-controls">
+        <button type="button" class="livepull-toggle" id="livepull-toggle">Start shot</button>
+        <button type="button" class="livepull-reset" id="livepull-reset">Reset</button>
+      </div>
+
+      <div class="livepull-taste" id="livepull-taste" hidden>
+        <div class="livepull-taste-kicker">Lands after the pour</div>
+        <div class="livepull-taste-title">How did it taste?</div>
+        <div class="livepull-taste-tags" id="livepull-taste-tags"></div>
+        <div class="livepull-save-row">
+          <button type="button" class="livepull-save-btn" id="livepull-save-btn">Save shot</button>
+          <button type="button" class="livepull-notes-link" id="livepull-notes-btn">or add notes &amp; photo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/supabase-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/cloud-data.js"></script>
+  <script src="js/live-pull.js"></script>
+  <script src="js/pwa.js"></script>
+</body>
+</html>
