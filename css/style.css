@@ -868,3 +868,127 @@ legend {
   font-size: 15px; font-weight: 600; color: var(--color-text); text-decoration: none;
 }
 .home-more-links a:hover { background: var(--color-surface-2); text-decoration: none; }
+
+/* ===========================================================
+   Live pull — timer-first shot flow (live-pull.html)
+   Full-bleed ink screen per the Organic "1b / 2b" mockups.
+   The timer IS the screen: no shared sidebar/bottomnav here.
+   =========================================================== */
+
+.livepull-page {
+  min-height: 100vh; min-height: 100dvh;
+  background: var(--color-ink); color: var(--color-ink-text);
+  display: flex; flex-direction: column; align-items: center;
+  padding: 22px 22px calc(env(safe-area-inset-bottom, 0px) + 22px);
+  box-sizing: border-box;
+}
+
+.livepull-exit {
+  align-self: flex-start;
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; font-weight: 600; color: var(--color-ink-text-muted);
+  text-decoration: none; padding: 8px 4px; margin-bottom: 6px;
+}
+.livepull-exit:hover { color: var(--color-ink-text); text-decoration: none; }
+
+.livepull-card { width: 100%; max-width: 480px; margin: 0 auto; }
+
+.livepull-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+.livepull-kicker {
+  font: 600 11px var(--font-sans); letter-spacing: 0.09em; text-transform: uppercase;
+  color: var(--color-accent-on-dark);
+}
+.livepull-bean {
+  font: 400 24px/1.1 var(--font-serif); margin-top: 6px; max-width: 15ch;
+}
+.livepull-bean-select {
+  font: 400 24px/1.1 var(--font-serif); margin-top: 6px; max-width: 15ch;
+  background: transparent; color: inherit; border: none; border-bottom: 1px dashed rgba(245,234,216,0.35);
+  padding: 0 0 2px; cursor: pointer;
+}
+.livepull-bean-select:disabled { opacity: 1; border-bottom-color: transparent; -webkit-appearance: none; appearance: none; }
+.livepull-meta { font-size: 13px; color: var(--color-ink-text-muted); text-align: right; line-height: 1.5; }
+.livepull-meta input {
+  width: 52px; background: transparent; color: inherit; border: none; border-bottom: 1px dashed rgba(245,234,216,0.35);
+  font: inherit; text-align: right; padding: 0 0 1px;
+}
+.livepull-meta input:disabled { border-bottom-color: transparent; }
+.livepull-meta input:focus { outline: none; border-bottom-color: var(--color-accent-on-dark); }
+
+.livepull-ring-wrap {
+  position: relative; width: 280px; height: 280px; max-width: 78vw; max-height: 78vw;
+  margin: 22px auto 8px;
+}
+.livepull-ring-wrap svg { width: 100%; height: 100%; transform: rotate(-90deg); display: block; }
+.livepull-ring-face {
+  position: absolute; inset: 0; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 2px;
+}
+.livepull-elapsed { font: 400 62px/1 var(--font-serif); font-variant-numeric: tabular-nums; }
+.livepull-elapsed-label {
+  font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-ink-text-muted);
+}
+.livepull-yield-row { margin-top: 12px; display: flex; align-items: baseline; gap: 4px; }
+.livepull-yield-input {
+  width: 3.2em; background: transparent; color: var(--color-accent-on-dark); border: none;
+  font: 400 20px/1 var(--font-serif); text-align: right; padding: 0; -moz-appearance: textfield;
+}
+.livepull-yield-input::-webkit-outer-spin-button, .livepull-yield-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.livepull-yield-input:focus { outline: none; }
+.livepull-yield-unit { font: 400 20px/1 var(--font-serif); color: var(--color-accent-on-dark); }
+.livepull-ratio { font-size: 13px; color: var(--color-ink-text-muted); }
+
+.livepull-status-row {
+  display: flex; justify-content: space-between; font-size: 12px; color: var(--color-ink-text-muted);
+  padding: 0 8px 18px;
+}
+.livepull-status-row span:first-child { text-transform: capitalize; }
+
+.livepull-controls { display: flex; gap: 12px; align-items: center; }
+.livepull-toggle {
+  flex: 1; padding: 16px; border-radius: var(--radius-pill); background: var(--color-accent);
+  color: var(--color-ink-text); font: 400 18px var(--font-serif); text-align: center; cursor: pointer;
+  border: none; transition: background 0.15s ease;
+}
+.livepull-toggle:hover { background: var(--color-accent-on-dark); }
+.livepull-toggle:disabled { opacity: 0.6; cursor: default; background: var(--color-accent); }
+.livepull-reset {
+  padding: 16px 22px; border-radius: var(--radius-pill); border: 1px solid rgba(245,234,216,0.28);
+  font-size: 14px; font-weight: 600; cursor: pointer; background: transparent; color: inherit;
+}
+.livepull-reset:hover { background: rgba(245,234,216,0.1); }
+
+.livepull-taste {
+  margin-top: 22px; padding: 22px 24px; background: var(--color-bg); color: var(--color-text);
+  border-radius: var(--radius-lg);
+}
+.livepull-taste-kicker {
+  font: 600 11px var(--font-sans); letter-spacing: 0.09em; text-transform: uppercase; color: var(--color-muted);
+}
+.livepull-taste-title { font: 400 21px/1.15 var(--font-serif); margin: 8px 0 14px; }
+.livepull-taste-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.livepull-taste-tag {
+  padding: 7px 14px; border-radius: var(--radius-pill); background: var(--color-surface);
+  font-size: 13px; font-weight: 600; cursor: pointer; border: none; color: var(--color-text);
+}
+.livepull-taste-tag:hover { background: var(--color-neutral-300); }
+.livepull-taste-tag.selected { background: var(--color-accent); color: var(--color-ink-text); }
+.livepull-taste-tag.selected:hover { background: var(--color-accent-hover); }
+.livepull-save-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.livepull-save-btn {
+  padding: 11px 22px; border-radius: var(--radius-pill); background: var(--color-ink);
+  color: var(--color-ink-text); font: 400 14px var(--font-serif); cursor: pointer; border: none;
+}
+.livepull-save-btn:hover { background: #35322f; }
+.livepull-save-btn:disabled { opacity: 0.6; cursor: default; }
+.livepull-notes-link { font-size: 13px; color: var(--color-muted); background: none; border: none; cursor: pointer; padding: 0; text-decoration: underline; }
+.livepull-notes-link:hover { color: var(--color-text); }
+
+@media (min-width: 640px) {
+  .livepull-page { padding: 34px 36px calc(env(safe-area-inset-bottom, 0px) + 34px); justify-content: center; }
+  .livepull-card {
+    background: var(--color-ink); border-radius: var(--radius-lg); padding: 34px 36px 30px;
+    box-shadow: var(--shadow-lg);
+  }
+  .livepull-exit { position: fixed; top: 22px; left: 22px; margin-bottom: 0; }
+}
