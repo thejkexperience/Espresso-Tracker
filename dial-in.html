@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The JK Espresso Tracker — Dial In</title>
+<link rel="stylesheet" href="css/style.css" />
+<link rel="manifest" href="manifest.json" />
+<meta name="theme-color" content="#201e1d" />
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj4KPHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIHJ4PSIyMiIgZmlsbD0iIzZGNEUzNyIvPgo8ZWxsaXBzZSBjeD0iNTAiIGN5PSI3OCIgcng9IjI0IiByeT0iNiIgZmlsbD0iI0ZBRjZGMCIvPgo8cG9seWdvbiBwb2ludHM9IjI3LDMyIDczLDMyIDY4LDcyIDMyLDcyIiBmaWxsPSIjRkFGNkYwIi8+CjxlbGxpcHNlIGN4PSI1MCIgY3k9IjMyIiByeD0iMjMiIHJ5PSI1IiBmaWxsPSIjNkY0RTM3Ii8+CjxlbGxpcHNlIGN4PSI1MCIgY3k9IjM0LjUiIHJ4PSIxOCIgcnk9IjMuMyIgZmlsbD0iIzRBMzIyMiIvPgo8cGF0aCBkPSJNNzIsNDAgYTEwLDEwIDAgMCAxIDAsMjAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZBRjZGMCIgc3Ryb2tlLXdpZHRoPSI0Ii8+CjxwYXRoIGQ9Ik00MCwyNiBDMzYsMjAgNDQsMTYgNDAsMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0MwODU1MiIgc3Ryb2tlLXdpZHRoPSIzLjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cGF0aCBkPSJNNTQsMjYgQzUwLDIwIDU4LDE2IDU0LDEwIiBmaWxsPSJub25lIiBzdHJva2U9IiNDMDg1NTIiIHN0cm9rZS13aWR0aD0iMy4yIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPC9zdmc+Cg==" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Espresso Tracker" />
+</head>
+<body class="page-dialin">
+  <header class="topbar" id="topbar"></header>
+
+  <main class="app-shell">
+    <div class="dialin-head">
+      <img class="dialin-avatar washed" id="dialin-avatar" src="images/backgrounds/beans.jpg" alt="" />
+      <div class="dialin-info">
+        <div class="dialin-kicker" id="dialin-kicker">Dialing in</div>
+        <h1 class="dialin-title" id="dialin-title">—</h1>
+        <div class="dialin-sub" id="dialin-sub">—</div>
+      </div>
+      <span class="dialin-badge" id="dialin-badge" hidden></span>
+    </div>
+
+    <div class="dialin-card">
+      <div class="dialin-card-head">
+        <div class="dialin-card-kicker">Grind setting</div>
+        <div class="dialin-grind-value" id="dialin-grind-value">4.5</div>
+      </div>
+      <div class="dialin-slider-track" id="dialin-slider-track">
+        <div class="dialin-slider-rail"></div>
+        <div class="dialin-slider-band" id="dialin-slider-band" hidden></div>
+        <div class="dialin-slider-thumb" id="dialin-slider-thumb"></div>
+      </div>
+      <div class="dialin-slider-labels">
+        <span id="dialin-min-label">1.0 coarse</span>
+        <span class="sweet" id="dialin-sweet-label"></span>
+        <span id="dialin-max-label">8.0 fine</span>
+      </div>
+      <div class="dialin-prediction" id="dialin-prediction">Log a shot to start dialing in this bag.</div>
+      <a href="brew-log.html" class="btn btn-primary dialin-pull-btn" id="dialin-pull-btn">Pull a shot at this setting</a>
+    </div>
+
+    <div class="dialin-attempts-kicker">Attempts on this bag</div>
+    <div class="dialin-attempts-list" id="dialin-attempts-list"></div>
+    <div class="dialin-attempts-axis" id="dialin-attempts-axis" hidden>
+      <span id="dialin-axis-min">15 s</span>
+      <span id="dialin-axis-band">25–30 s</span>
+      <span id="dialin-axis-max">40 s</span>
+    </div>
+  </main>
+
+  <nav id="bottomnav"></nav>
+
+  <script src="js/supabase-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/cloud-data.js"></script>
+  <script src="js/dial-in.js"></script>
+  <script src="js/pwa.js"></script>
+</body>
+</html>
