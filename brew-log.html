@@ -146,17 +146,29 @@
     </form>
 
     <div class="section">
-      <div class="toolbar">
-        <h2 style="margin:0;">Brew history</h2>
-        <div class="spacer"></div>
-        <input type="search" id="search-brews" placeholder="Search by bean, machine, notes..." />
-        <select id="sort-brews">
-          <option value="date-desc">Newest first</option>
-          <option value="date-asc">Oldest first</option>
-          <option value="rating-desc">Highest rated</option>
-        </select>
+      <div class="shotlog-head">
+        <div>
+          <div class="shotlog-kicker" id="shotlog-count">Loading…</div>
+          <h2 class="shotlog-title">Shot log</h2>
+        </div>
+        <div class="shotlog-controls">
+          <div class="shotlog-filter-group">
+            <button type="button" class="shotlog-filter-btn active" data-filter="all">All</button>
+            <button type="button" class="shotlog-filter-btn" data-filter="band">In band</button>
+            <button type="button" class="shotlog-filter-btn" data-filter="top">4★+</button>
+          </div>
+          <input type="search" id="search-brews" class="shotlog-search" placeholder="Search shots..." />
+          <select id="sort-brews">
+            <option value="date-desc">Newest first</option>
+            <option value="date-asc">Oldest first</option>
+            <option value="rating-desc">Highest rated</option>
+          </select>
+        </div>
       </div>
-      <div class="brew-list" id="brew-history"></div>
+      <div class="shotlog-header-row">
+        <span>When</span><span>Bean</span><span>Grind</span><span>Ratio</span><span>Time</span><span>Taste</span>
+      </div>
+      <div class="shotlog-list" id="brew-history"></div>
     </div>
   </main>
 
