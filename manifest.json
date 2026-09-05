@@ -9,17 +9,17 @@
     "background_color": "#f5ead8",
     "theme_color": "#201e1d",
     "icons": [
-          {
-                  "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj4KPHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIHJ4PSIyMiIgZmlsbD0iIzZGNEUzNyIvPgo8ZWxsaXBzZSBjeD0iNTAiIGN5PSI3OCIgcng9IjI0IiByeT0iNiIgZmlsbD0iI0ZBRjZGMCIvPgo8cG9seWdvbiBwb2ludHM9IjI3LDMyIDczLDMyIDY4LDcyIDMyLDcyIiBmaWxsPSIjRkFGNkYwIi8+CjxlbGxpcHNlIGN4PSI1MCIgY3k9IjMyIiByeD0iMjMiIHJ5PSI1IiBmaWxsPSIjNkY0RTM3Ii8+CjxlbGxpcHNlIGN4PSI1MCIgY3k9IjM0LjUiIHJ4PSIxOCIgcnk9IjMuMyIgZmlsbD0iIzRBMzIyMiIvPgo8cGF0aCBkPSJNNzIsNDAgYTEwLDEwIDAgMCAxIDAsMjAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZBRjZGMCIgc3Ryb2tlLXdpZHRoPSI0Ii8+CjxwYXRoIGQ9Ik00MCwyNiBDMzYsMjAgNDQsMTYgNDAsMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0MwODU1MiIgc3Ryb2tlLXdpZHRoPSIzLjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cGF0aCBkPSJNNTQsMjYgQzUwLDIwIDU4LDE2IDU0LDEwIiBmaWxsPSJub25lIiBzdHJva2U9IiNDMDg1NTIiIHN0cm9rZS13aWR0aD0iMy4yIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPC9zdmc+Cg==",
-                  "sizes": "any",
-                  "type": "image/svg+xml",
-                  "purpose": "any"
-          },
-          {
-                  "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj4KPHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9IiM2RjRFMzciLz4KPGVsbGlwc2UgY3g9IjUwIiBjeT0iNzIiIHJ4PSIxNiIgcnk9IjQiIGZpbGw9IiNGQUY2RjAiLz4KPHBvbHlnb24gcG9pbnRzPSIzNSw0MiA2NSw0MiA2MS41LDY4IDM4LjUsNjgiIGZpbGw9IiNGQUY2RjAiLz4KPGVsbGlwc2UgY3g9IjUwIiBjeT0iNDIiIHJ4PSIxNSIgcnk9IjMuMyIgZmlsbD0iIzZGNEUzNyIvPgo8ZWxsaXBzZSBjeD0iNTAiIGN5PSI0NCIgcng9IjEyIiByeT0iMi4yIiBmaWxsPSIjNEEzMjIyIi8+CjxwYXRoIGQ9Ik02NSw0OCBhNyw3IDAgMCAxIDAsMTQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZBRjZGMCIgc3Ryb2tlLXdpZHRoPSIzIi8+CjxwYXRoIGQ9Ik00MiwzOCBDMzksMzMgNDUsMzAgNDIsMjUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0MwODU1MiIgc3Ryb2tlLXdpZHRoPSIyLjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cGF0aCBkPSJNNTIsMzggQzQ5LDMzIDU1LDMwIDUyLDI1IiBmaWxsPSJub25lIiBzdHJva2U9IiNDMDg1NTIiIHN0cm9rZS13aWR0aD0iMi40IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPC9zdmc+Cg==",
-                  "sizes": "any",
-                  "type": "image/svg+xml",
-                  "purpose": "maskable"
-          }
+        {
+            "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj4KPHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIHJ4PSIyMiIgZmlsbD0iIzhjNDkxYSIvPgo8ZWxsaXBzZSBjeD0iNTAiIGN5PSI3OCIgcng9IjI0IiByeT0iNiIgZmlsbD0iI2Y1ZWFkOCIvPgo8cG9seWdvbiBwb2ludHM9IjI3LDMyIDczLDMyIDY4LDcyIDMyLDcyIiBmaWxsPSIjZjVlYWQ4Ii8+CjxlbGxpcHNlIGN4PSI1MCIgY3k9IjMyIiByeD0iMjMiIHJ5PSI1IiBmaWxsPSIjOGM0OTFhIi8+CjxlbGxpcHNlIGN4PSI1MCIgY3k9IjM0LjUiIHJ4PSIxOCIgcnk9IjMuMyIgZmlsbD0iIzIwMWUxZCIvPgo8cGF0aCBkPSJNNzIsNDAgYTEwLDEwIDAgMCAxIDAsMjAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2Y1ZWFkOCIgc3Ryb2tlLXdpZHRoPSI0Ii8+CjxwYXRoIGQ9Ik00MCwyNiBDMzYsMjAgNDQsMTYgNDAsMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2M2NzEzOSIgc3Ryb2tlLXdpZHRoPSIzLjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cGF0aCBkPSJNNTQsMjYgQzUwLDIwIDU4LDE2IDU0LDEwIiBmaWxsPSJub25lIiBzdHJva2U9IiNjNjcxMzkiIHN0cm9rZS13aWR0aD0iMy4yIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPC9zdmc+Cg==",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "any"
+        },
+        {
+            "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj4KPHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9IiM4YzQ5MWEiLz4KPGVsbGlwc2UgY3g9IjUwIiBjeT0iNzIiIHJ4PSIxNiIgcnk9IjQiIGZpbGw9IiNmNWVhZDgiLz4KPHBvbHlnb24gcG9pbnRzPSIzNSw0MiA2NSw0MiA2MS41LDY4IDM4LjUsNjgiIGZpbGw9IiNmNWVhZDgiLz4KPGVsbGlwc2UgY3g9IjUwIiBjeT0iNDIiIHJ4PSIxNSIgcnk9IjMuMyIgZmlsbD0iIzhjNDkxYSIvPgo8ZWxsaXBzZSBjeD0iNTAiIGN5PSI0NCIgcng9IjEyIiByeT0iMi4yIiBmaWxsPSIjMjAxZTFkIi8+CjxwYXRoIGQ9Ik02NSw0OCBhNyw3IDAgMCAxIDAsMTQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2Y1ZWFkOCIgc3Ryb2tlLXdpZHRoPSIzIi8+CjxwYXRoIGQ9Ik00MiwzOCBDMzksMzMgNDUsMzAgNDIsMjUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2M2NzEzOSIgc3Ryb2tlLXdpZHRoPSIyLjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cGF0aCBkPSJNNTIsMzggQzQ5LDMzIDU1LDMwIDUyLDI1IiBmaWxsPSJub25lIiBzdHJva2U9IiNjNjcxMzkiIHN0cm9rZS13aWR0aD0iMi40IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPC9zdmc+Cg==",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "maskable"
+        }
     ]
 }
