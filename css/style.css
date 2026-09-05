@@ -1054,3 +1054,63 @@ legend {
   .dialin-attempt-note { display: none; }
   .dialin-attempts-axis { padding-left: 60px; }
 }
+
+/* ===========================================================
+   Shot log (brew-log.html) — restyle of "Brew history" per the
+   Organic "1d / 2c" mockups. A scannable, filterable list above
+   the existing add/edit form: desktop grid rows collapse to
+   two-line mobile rows below 720px.
+   =========================================================== */
+
+.shotlog-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 14px; flex-wrap: wrap; margin-bottom: 18px; }
+.shotlog-kicker { font: 600 11px var(--font-sans); letter-spacing: 0.09em; text-transform: uppercase; color: rgba(32,30,29,0.5); }
+.shotlog-title { font: 400 28px/1.05 var(--font-serif); margin: 8px 0 0; }
+
+.shotlog-controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.shotlog-filter-group { display: flex; background: var(--color-surface); border-radius: var(--radius-pill); padding: 3px; }
+.shotlog-filter-btn {
+  padding: 7px 15px; border-radius: var(--radius-pill); font-size: 13px; font-weight: 600;
+  color: rgba(32,30,29,0.6); background: none; border: none; cursor: pointer; font-family: var(--font-sans);
+}
+.shotlog-filter-btn:hover { color: var(--color-text); }
+.shotlog-filter-btn.active { background: var(--color-bg); color: var(--color-text); }
+.shotlog-search { max-width: 200px; }
+
+.shotlog-header-row {
+  display: grid; grid-template-columns: 104px 1fr 74px 78px 62px 96px; gap: 12px;
+  padding: 0 6px 10px; font: 600 10.5px var(--font-sans); letter-spacing: 0.08em; text-transform: uppercase; color: rgba(32,30,29,0.5);
+}
+.shotlog-header-row span:last-child { text-align: right; }
+
+.shotlog-list { display: flex; flex-direction: column; }
+
+.shotlog-row {
+  display: grid; grid-template-columns: 104px 1fr 74px 78px 62px 96px; gap: 12px; align-items: center;
+  padding: 14px 6px; border-top: 1px solid rgba(32,30,29,0.12); cursor: pointer;
+}
+.shotlog-row:hover { background: rgba(32,30,29,0.04); }
+.shotlog-row-when { font-size: 13px; color: rgba(32,30,29,0.55); }
+.shotlog-row-bean { font-size: 14px; font-weight: 600; }
+.shotlog-row-grind { font-size: 13px; }
+.shotlog-row-ratio { font-size: 13px; font-weight: 600; }
+.shotlog-row-time { font-size: 13px; }
+.shotlog-row-taste { font-size: 13px; text-align: right; font-weight: 600; }
+
+.shotlog-row-mobile { display: none; }
+
+@media (max-width: 720px) {
+  .shotlog-controls { width: 100%; }
+  .shotlog-search { max-width: none; flex: 1; }
+  .shotlog-header-row { display: none; }
+  .shotlog-row { display: none; }
+  .shotlog-row-mobile {
+    display: flex; align-items: center; justify-content: space-between; gap: 14px;
+    padding: 16px 2px; border-top: 1px solid rgba(32,30,29,0.12); cursor: pointer;
+  }
+  .shotlog-row-mobile-left { min-width: 0; }
+  .shotlog-row-mobile-bean { font-size: 15px; font-weight: 600; }
+  .shotlog-row-mobile-meta { font-size: 12px; color: rgba(32,30,29,0.55); margin-top: 3px; }
+  .shotlog-row-mobile-right { text-align: right; flex: none; }
+  .shotlog-row-mobile-ratio { font-size: 15px; font-weight: 600; }
+  .shotlog-row-mobile-taste { font-size: 12px; font-weight: 600; margin-top: 3px; }
+}
