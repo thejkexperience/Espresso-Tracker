@@ -4,6 +4,7 @@
 
 let currentRating = 0;
 let selectedIssues = new Set();
+let historyFilter = "all"; // all | band | top — shot log filter chips
 
 // Photo state for the form currently being edited.
 // pendingFiles: newly-picked File objects, keyed by slot, not yet uploaded.
@@ -29,6 +30,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("delete-brew").addEventListener("click", onDeleteBrew);
   document.getElementById("search-brews").addEventListener("input", debounce(renderHistory, 150));
   document.getElementById("sort-brews").addEventListener("change", renderHistory);
+  document.querySelectorAll(".shotlog-filter-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      historyFilter = btn.dataset.filter;
+      document.querySelectorAll(".shotlog-filter-btn").forEach(b => b.classList.toggle("active", b === btn));
+      renderHistory();
+    });
+  });
   document.getElementById("bean-select").addEventListener("change", onBeanSelectChange);
   document.getElementById("use-suggestion-btn").addEventListener("click", applyIssueSuggestion);
   document.getElementById("add-bean-close").addEventListener("click", () => toggleModal("add-bean-modal", false));
@@ -368,16 +376,21 @@ async function onDeleteBrew() {
   }
 }
 
-// ---------- History list ----------
+// ---------- History list (shot log) ----------
+// Per the Organic "1d / 2c" mockups: a scannable, filterable list —
+// desktop grid rows (When / Bean / Grind / Ratio / Time / Taste)
+// collapse to two-line mobile rows via CSS (.shotlog-row vs.
+// .shotlog-row-mobile), same dual-render pattern used on Home.
 
 async function renderHistory() {
   const el = document.getElementById("brew-history");
-  el.innerHTML = `<div class="muted">Loading your brews…</div>`;
+  el.innerHTML = `<div class="muted">Loading your shots…</div>`;
 
   const query = document.getElementById("search-brews").value.toLowerCase().trim();
   const sortMode = document.getElementById("sort-brews").value;
 
   let brews = await getBrews();
+  const totalCount = brews.length;
 
   if (query) {
     brews = brews.filter(b => {
@@ -388,37 +401,53 @@ async function renderHistory() {
     });
   }
 
+  if (historyFilter === "band") {
+    brews = brews.filter(inTargetBand);
+  } else if (historyFilter === "top") {
+    brews = brews.filter(b => Number(b.rating) >= 4);
+  }
+
   if (sortMode === "date-asc") brews = brews.slice().reverse();
   if (sortMode === "rating-desc") brews = brews.slice().sort((a, b) => (b.rating || 0) - (a.rating || 0));
 
+  const countEl = document.getElementById("shotlog-count");
+  if (countEl) countEl.textContent = `${totalCount} shot${totalCount === 1 ? "" : "s"}`;
+
   if (!brews.length) {
-    el.innerHTML = `<div class="empty-state card"><div class="icon">🔍</div><p>No brews match yet.</p></div>`;
+    el.innerHTML = `<div class="empty-state card"><div class="icon">🔍</div><p>No shots match yet.</p></div>`;
     return;
   }
 
   el.innerHTML = brews.map(b => {
-    const hasPhotos = b.photoShotPath || b.photoPuckPath || b.photoPackagingPath;
+    const when = escapeHtml(relativeWhen(b.date, b.time));
+    const grind = b.grindSize ? escapeHtml(b.grindSize) : "—";
+    const ratio = ratioLabel(b.doseWeight, b.yieldWeight) || "—";
+    const time = b.brewTime !== "" && b.brewTime != null ? `${Math.round(b.brewTime)}s` : "—";
+    const bean = escapeHtml(b.beanName || "Unnamed bean");
+    const taste = tasteLabel(b);
     return `
-    <div class="brew-item" data-id="${b.id}">
-      <div>
-        <strong>${escapeHtml(b.beanName || "Unnamed bean")}</strong>
-        <div class="meta">${formatDate(b.date)}${b.time ? " · " + b.time : ""} · ${escapeHtml(b.machineType || "—")} · grind ${escapeHtml(b.grindSize || "—")}</div>
-        ${b.feedback ? `<div class="meta">"${escapeHtml(truncate(b.feedback, 90))}"</div>` : ""}
-        <div class="tags">
-          ${b.doseWeight ? `<span class="chip">${escapeHtml(b.doseWeight)}g in</span>` : ""}
-          ${b.yieldWeight ? `<span class="chip">${escapeHtml(b.yieldWeight)}g out</span>` : ""}
-          ${b.brewTime ? `<span class="chip">${escapeHtml(b.brewTime)}s</span>` : ""}
-          ${hasPhotos ? `<span class="chip">📷 photos</span>` : ""}
-        </div>
+    <div class="shotlog-row" data-id="${b.id}">
+      <span class="shotlog-row-when">${when}</span>
+      <span class="shotlog-row-bean">${bean}</span>
+      <span class="shotlog-row-grind">${grind}</span>
+      <span class="shotlog-row-ratio">${ratio}</span>
+      <span class="shotlog-row-time">${time}</span>
+      <span class="shotlog-row-taste" style="color:${taste.color};">${escapeHtml(taste.label)}</span>
+    </div>
+    <div class="shotlog-row-mobile" data-id="${b.id}">
+      <div class="shotlog-row-mobile-left">
+        <div class="shotlog-row-mobile-bean">${bean}</div>
+        <div class="shotlog-row-mobile-meta">${when} · grind ${grind} · ${time}</div>
       </div>
-      <div style="text-align:right;">
-        <div>${b.rating ? starString(b.rating) : ""}</div>
+      <div class="shotlog-row-mobile-right">
+        <div class="shotlog-row-mobile-ratio">${ratio}</div>
+        <div class="shotlog-row-mobile-taste" style="color:${taste.color};">${escapeHtml(taste.label)}</div>
       </div>
     </div>
   `;
   }).join("");
 
-  [...el.querySelectorAll(".brew-item")].forEach(node => {
+  [...el.querySelectorAll("[data-id]")].forEach(node => {
     node.addEventListener("click", async () => {
       const brew = await getBrew(node.dataset.id);
       if (brew) loadBrewIntoForm(brew);
@@ -426,7 +455,55 @@ async function renderHistory() {
   });
 }
 
-function truncate(str, len) {
-  if (!str) return "";
-  return str.length > len ? str.slice(0, len) + "…" : str;
+// A shot is "in the target band" at a typical 1:1.8–1:2.2 espresso ratio —
+// mirrors the same definition used for Home's "in the target band" stat.
+function inTargetBand(b) {
+  const d = Number(b.doseWeight), y = Number(b.yieldWeight);
+  if (!d || !y) return false;
+  const ratio = y / d;
+  return ratio >= 1.8 && ratio <= 2.2;
+}
+
+function ratioLabel(dose, yieldWeight) {
+  const d = Number(dose), y = Number(yieldWeight);
+  if (!d || !y) return "";
+  return `1:${(y / d).toFixed(1)}`;
+}
+
+function relativeWhen(dateStr, timeStr) {
+  if (!dateStr) return "—";
+  if (dateStr === todayStr()) return timeStr ? formatTimeOfDay(timeStr) : "Today";
+
+  const d = new Date(dateStr + "T00:00:00");
+  const now = new Date();
+  const yesterday = new Date(now);
+  yesterday.setDate(now.getDate() - 1);
+  if (dateStr === yesterday.toISOString().slice(0, 10)) return "Yesterday";
+
+  const diffDays = Math.round((now - d) / (1000 * 60 * 60 * 24));
+  if (diffDays >= 0 && diffDays < 7) return d.toLocaleDateString(undefined, { weekday: "short" });
+  return formatDate(dateStr);
+}
+
+function formatTimeOfDay(timeStr) {
+  if (!timeStr) return "";
+  const parts = timeStr.split(":").map(Number);
+  const d = new Date();
+  d.setHours(parts[0] || 0, parts[1] || 0, 0, 0);
+  return d.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" }).toLowerCase().replace(" ", "");
+}
+
+// A short, honest taste read for the row: the first logged issue tag
+// if the shot had one, otherwise a plain-language bucket from the
+// star rating. Keeps the log scannable without inventing tasting notes.
+function tasteLabel(b) {
+  if (b.issueTags && b.issueTags.length) {
+    const tag = ISSUE_TAGS.find(t => t.id === b.issueTags[0]);
+    return { label: tag ? tag.label : "Off", color: "var(--color-danger)" };
+  }
+  const rating = Number(b.rating) || 0;
+  if (rating >= 5) return { label: "Great", color: "var(--color-accent-2-text)" };
+  if (rating >= 4) return { label: "Good", color: "var(--color-accent-2-text)" };
+  if (rating >= 1) return { label: "OK", color: "var(--color-muted)" };
+  return { label: "—", color: "var(--color-muted)" };
 }
