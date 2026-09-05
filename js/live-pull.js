@@ -47,6 +47,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   renderTasteTags();
   await loadBeanDefaults();
+  await applyQueryOverrides();
   updateRatio();
 
   document.getElementById("livepull-toggle").addEventListener("click", onToggle);
@@ -88,6 +89,26 @@ async function loadBeanDefaults() {
     .join("");
   select.value = beans[0].id;
   await applyBeanSelection(beans[0]);
+}
+
+// A link from dial-in.html can pass ?beanId=&grind= to preset this screen
+// to the bag and setting the user was just considering there. The grind
+// override applies after the bean's own last-used default so it wins.
+async function applyQueryOverrides() {
+  const params = new URLSearchParams(window.location.search);
+  const beanId = params.get("beanId");
+  const grind = params.get("grind");
+
+  if (beanId) {
+    const bean = beans.find(b => b.id === beanId);
+    if (bean) {
+      document.getElementById("livepull-bean-select").value = bean.id;
+      await applyBeanSelection(bean);
+    }
+  }
+  if (grind) {
+    document.getElementById("livepull-grind").value = grind;
+  }
 }
 
 async function onBeanChange(e) {
