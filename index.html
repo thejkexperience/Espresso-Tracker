@@ -13,41 +13,91 @@
 <meta name="apple-mobile-web-app-title" content="Espresso Tracker" />
 </head>
 <body class="page-home">
-  <header class="topbar" id="topbar"></header>
-
-  <main class="app-shell">
-    <div class="page-header">
-      <div class="eyebrow">Welcome back</div>
-      <h1>Your espresso dashboard</h1>
-      <p class="muted">Track every shot, dial in your beans, and never lose a great recipe.</p>
-    </div>
-
-    <div class="card-row" id="stats-row"></div>
-
-    <div class="two-col section">
-      <div>
-        <div class="flex-between mb-16">
-          <h2>Recent brews</h2>
-          <a href="brew-log.html" class="btn btn-outline btn-sm">+ Log a brew</a>
+  <div class="home-app">
+    <aside class="home-sidebar" id="home-sidebar">
+      <a class="home-brand" href="index.html">
+        <div class="home-brand-icon-fallback">☕</div>
+        <div>
+          <div class="home-brand-text-name">Espresso Tracker</div>
+          <div class="home-brand-text-kicker">The JK</div>
         </div>
-        <div class="brew-list" id="recent-brews"></div>
+      </a>
+
+      <nav class="home-nav">
+        <a href="index.html" class="home-nav-item active">Home</a>
+        <a href="brew-log.html" class="home-nav-item">Shot log</a>
+        <a href="beans.html" class="home-nav-item">Beans</a>
+        <a href="gear.html" class="home-nav-item">Gear</a>
+        <a href="recipes.html" class="home-nav-item">Recipes</a>
+      </nav>
+
+      <div class="home-shelf-card" id="home-shelf-card">
+        <div class="home-shelf-kicker">On the shelf</div>
+        <div class="home-shelf-name">—</div>
+        <div class="home-shelf-meta">Loading…</div>
       </div>
 
-      <div>
-        <h2>Quick links</h2>
-        <div class="card">
-          <a href="brew-log.html">📝 Log a new brew</a><br><br>
-          <a href="beans.html">🌱 Add a bean</a><br><br>
-          <a href="recipes.html">📖 Browse recipes</a><br><br>
-          <a href="discover.html">🗺️ Find new roasters</a><br><br>
-          <a href="gear.html">⚙️ Browse gear</a><br><br>
-          <a href="learn.html">🎓 Learn about coffee</a>
+      <div class="home-sidebar-account" id="home-sidebar-account"></div>
+    </aside>
+
+    <header class="home-topbar-mobile" id="home-topbar-mobile">
+      <a class="home-brand-mobile" href="index.html">
+        <div class="home-brand-icon-fallback" style="width:32px;height:32px;font-size:15px;">☕</div>
+        <span>Espresso Tracker</span>
+      </a>
+      <div class="home-avatar-slot" id="home-avatar-slot"></div>
+    </header>
+
+    <main class="home-main">
+      <div class="home-kicker" id="home-kicker">—</div>
+      <h1 class="home-greeting" id="home-greeting">Welcome back</h1>
+
+      <div class="home-hero-row">
+        <div class="home-hero-ink">
+          <div>
+            <div class="home-hero-kicker">Start here</div>
+            <div class="home-hero-title">Pull a shot</div>
+          </div>
+          <div class="home-hero-cta-row">
+            <a href="brew-log.html" class="home-hero-btn">Start timer</a>
+            <div class="home-hero-sub">Numbers land after the pour.</div>
+          </div>
         </div>
+
+        <div class="home-last-shot" id="home-last-shot"></div>
+      </div>
+
+      <div class="home-stats" id="home-stats"></div>
+
+      <div class="home-recent-head">
+        <h2>Recent</h2>
+        <a href="brew-log.html" class="home-recent-all" id="home-recent-all">All shots</a>
+      </div>
+      <div class="home-recent-list" id="home-recent-list"></div>
+    </main>
+
+    <nav class="home-bottomnav" id="home-bottomnav">
+      <a href="index.html" class="active"><span class="home-bn-icon">🏠</span>Home</a>
+      <a href="brew-log.html"><span class="home-bn-icon">☕</span>Log</a>
+      <a href="beans.html"><span class="home-bn-icon">🌱</span>Beans</a>
+      <a href="gear.html"><span class="home-bn-icon">⚙️</span>Gear</a>
+      <button type="button" id="home-more-btn"><span class="home-bn-icon">⋯</span>More</button>
+    </nav>
+  </div>
+
+  <div class="modal-backdrop" id="home-more-modal">
+    <div class="modal">
+      <div class="flex-between mb-16">
+        <h2 style="margin:0;">More</h2>
+        <button type="button" class="btn btn-sm btn-outline" id="home-more-close">Close</button>
+      </div>
+      <div class="home-more-links">
+        <a href="recipes.html">📖 Recipes</a>
+        <a href="discover.html">🗺️ Discover</a>
+        <a href="learn.html">🎓 Learn</a>
       </div>
     </div>
-  </main>
-
-  <nav id="bottomnav"></nav>
+  </div>
 
   <script src="js/supabase-config.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
