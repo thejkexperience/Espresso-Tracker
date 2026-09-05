@@ -168,7 +168,7 @@ function renderKickerAndGreeting(session) {
 
   const hour = now.getHours();
   const timeGreeting = hour < 12 ? "Morning" : hour < 18 ? "Afternoon" : "Evening";
-  const firstName = (session.user.user_metadata && session.user.user_metadata.first_name) || "";
+  const firstName = (session.user.user_metadata && session.user_metadata.first_name) || "";
   const greetingEl = document.getElementById("home-greeting");
   if (greetingEl) greetingEl.textContent = firstName ? `${timeGreeting}, ${firstName}` : timeGreeting;
 }
@@ -192,7 +192,7 @@ async function renderShelf() {
   const metaParts = [bean.roaster, daysLabel].filter(Boolean);
   el.innerHTML = `
     <div class="home-shelf-kicker">On the shelf</div>
-    <div class="home-shelf-name">${escapeHtml(bean.name)}</div>
+    <a class="home-shelf-name" href="dial-in.html?beanId=${encodeURIComponent(bean.id)}">${escapeHtml(bean.name)}</a>
     <div class="home-shelf-meta">${escapeHtml(metaParts.join(" · "))}</div>`;
 }
 
