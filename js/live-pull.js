@@ -56,6 +56,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("livepull-bean-select").addEventListener("change", onBeanChange);
   document.getElementById("livepull-save-btn").addEventListener("click", () => onSave(false));
   document.getElementById("livepull-notes-btn").addEventListener("click", () => onSave(true));
+  document.getElementById("add-bean-close").addEventListener("click", () => toggleModal("add-bean-modal", false));
+  document.getElementById("add-bean-form").addEventListener("submit", onAddBeanFromLivePull);
+  [...document.querySelectorAll(".modal-backdrop")].forEach(bd => {
+    bd.addEventListener("click", (e) => { if (e.target === bd) bd.classList.remove("open"); });
+  });
 });
 
 // ---------- Session (this page draws its own minimal chrome) ----------
@@ -76,19 +81,27 @@ async function initLivePullSession() {
 // ---------- Bean + last-used dose/grind defaults ----------
 
 async function loadBeanDefaults() {
-  const select = document.getElementById("livepull-bean-select");
   beans = await getBeans();
+  populateBeanSelect();
 
-  if (!beans.length) {
-    select.innerHTML = `<option value="">No beans yet — add one on the Beans page</option>`;
-    return;
-  }
+  if (!beans.length) return;
 
-  select.innerHTML = beans
-    .map(b => `<option value="${escapeHtml(b.id)}">${escapeHtml(b.name)}</option>`)
-    .join("");
+  const select = document.getElementById("livepull-bean-select");
   select.value = beans[0].id;
   await applyBeanSelection(beans[0]);
+}
+
+// Rebuilds the bean dropdown from the current `beans` list, always offering
+// a "+ Add a new bean…" option at the end so a bag that isn't in the library
+// yet never blocks starting a shot — same pattern as brew-log.html's bean
+// select, so a bean added here shows up there too (and vice versa).
+function populateBeanSelect(selectedId) {
+  const select = document.getElementById("livepull-bean-select");
+  const beanOptions = beans.length
+    ? beans.map(b => `<option value="${escapeHtml(b.id)}">${escapeHtml(b.name)}</option>`).join("")
+    : `<option value="">No beans yet</option>`;
+  select.innerHTML = beanOptions + `<option value="__new__">+ Add a new bean…</option>`;
+  if (selectedId) select.value = selectedId;
 }
 
 // A link from dial-in.html can pass ?beanId=&grind= to preset this screen
@@ -112,6 +125,11 @@ async function applyQueryOverrides() {
 }
 
 async function onBeanChange(e) {
+  if (e.target.value === "__new__") {
+    e.target.value = selectedBean ? selectedBean.id : "";
+    toggleModal("add-bean-modal", true);
+    return;
+  }
   const bean = beans.find(b => b.id === e.target.value) || null;
   await applyBeanSelection(bean);
 }
@@ -126,6 +144,43 @@ async function applyBeanSelection(bean) {
   const lastForBean = brews.find(b => b.beanId === bean.id);
   doseInput.value = lastForBean && lastForBean.doseWeight !== "" ? lastForBean.doseWeight : DEFAULT_DOSE;
   grindInput.value = lastForBean && lastForBean.grindSize ? lastForBean.grindSize : "—";
+}
+
+function toggleModal(id, open) {
+  document.getElementById(id).classList.toggle("open", open);
+}
+
+// Adding a bean from the live-pull timer opens a modal on top of the
+// in-progress shot. Only the bean select and its dose/grind defaults get
+// touched on save — the running timer state (if any) is untouched.
+async function onAddBeanFromLivePull(e) {
+  e.preventDefault();
+  const bean = {
+    name: document.getElementById("nb-name").value.trim(),
+    roaster: document.getElementById("nb-roaster").value.trim(),
+    roastType: document.getElementById("nb-roast-type").value,
+    source: document.getElementById("nb-source").value.trim(),
+    process: document.getElementById("nb-process").value.trim(),
+    price: document.getElementById("nb-price").value.trim(),
+    history: document.getElementById("nb-history").value.trim(),
+    notes: document.getElementById("nb-notes").value.trim()
+  };
+  if (!bean.name) return;
+
+  const submitBtn = e.target.querySelector("button[type=submit]");
+  submitBtn.disabled = true;
+  try {
+    const saved = await saveBean(bean);
+    beans.push(saved);
+    populateBeanSelect(saved.id);
+    await applyBeanSelection(saved);
+    document.getElementById("add-bean-form").reset();
+    toggleModal("add-bean-modal", false);
+  } catch (err) {
+    alert("Couldn't save that bean: " + (err.message || err));
+  } finally {
+    submitBtn.disabled = false;
+  }
 }
 
 // ---------- Timer ----------
