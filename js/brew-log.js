@@ -205,7 +205,7 @@ function renderPhotoPreview(slot, imgUrl, isLocalPreview) {
   }
   el.innerHTML = `
     <img src="${imgUrl}" alt="${slot} photo" />
-    <button type="button" class="remove-photo" title="Remove photo">✕</button>
+    <button type="button" class="remove-photo" title="Remove photo" aria-label="Remove photo">✕</button>
   `;
   el.querySelector(".remove-photo").addEventListener("click", () => {
     pendingFiles[slot] = null;
