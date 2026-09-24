@@ -126,6 +126,12 @@ function buildSocialButtons() {
     </div>`;
   form.parentNode.insertBefore(wrap, form);
 
+  const policy = document.createElement("p");
+  policy.className = "muted";
+  policy.style.cssText = "text-align:center;margin-top:14px;font-size:13px;";
+  policy.innerHTML = `Read our <a href="privacy.html" style="color:inherit;text-decoration:underline;">Privacy Policy</a>`;
+  form.parentNode.appendChild(policy);
+
   document.getElementById("google-btn").addEventListener("click", async () => {
     hideMessages();
     const { error } = await supabaseClient.auth.signInWithOAuth({
