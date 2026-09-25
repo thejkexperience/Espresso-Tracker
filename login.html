@@ -43,6 +43,11 @@
             <label for="auth-firstname">First name</label>
             <input type="text" id="auth-firstname" autocomplete="given-name" placeholder="e.g. Jared" />
           </div>
+          <div class="field" id="field-username" style="display:none;">
+            <label for="auth-username">Username</label>
+            <input type="text" id="auth-username" maxlength="20" autocomplete="username" autocapitalize="off" spellcheck="false" placeholder="e.g. crema_chaser" />
+            <div class="muted" id="auth-username-hint" style="font-size:12px;margin-top:4px;">Shown in the community instead of your name. 3 to 20 letters, numbers, or underscores.</div>
+          </div>
           <div class="field">
             <label for="auth-email">Email</label>
             <input type="text" id="auth-email" required autocomplete="email" />
