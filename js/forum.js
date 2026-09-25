@@ -569,7 +569,7 @@ function wirePhotoInput(inputId, previewId, key) {
 }
 
 function wireStaticControls() {
-  document.getElementById("setup-form").addEventListener("submit", onSetupSubmit);
+  document.getElementById("forum-setup").addEventListener("submit", onSetupSubmit);
   document.getElementById("setup-username").addEventListener("input", debounce(checkSetupUsername, 350));
 
   document.getElementById("ask-btn").addEventListener("click", () => openNewPostModal());
