@@ -28,6 +28,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("brew-form").addEventListener("submit", onSubmitBrew);
   document.getElementById("cancel-edit").addEventListener("click", resetForm);
   document.getElementById("delete-brew").addEventListener("click", onDeleteBrew);
+  document.getElementById("ask-community").addEventListener("click", () => {
+    const id = document.getElementById("brew-id").value;
+    if (id) window.location.href = "forum.html?brew=" + encodeURIComponent(id);
+  });
   document.getElementById("search-brews").addEventListener("input", debounce(renderHistory, 150));
   document.getElementById("sort-brews").addEventListener("change", renderHistory);
   document.querySelectorAll(".shotlog-filter-btn").forEach(btn => {
@@ -341,6 +345,7 @@ async function loadBrewIntoForm(brew) {
 
   document.getElementById("cancel-edit").style.display = "inline-flex";
   document.getElementById("delete-brew").style.display = "inline-flex";
+  document.getElementById("ask-community").style.display = "inline-flex";
   document.getElementById("brew-form").scrollIntoView({ behavior: "smooth" });
 }
 
@@ -357,6 +362,7 @@ function resetForm() {
   resetPhotoState();
   document.getElementById("cancel-edit").style.display = "none";
   document.getElementById("delete-brew").style.display = "none";
+  document.getElementById("ask-community").style.display = "none";
   history.replaceState(null, "", "brew-log.html");
 }
 
