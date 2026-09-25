@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The JK Espresso Tracker | Community</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#201e1d" />
+  <link rel="apple-touch-icon" href="images/icons/icon-192.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Espresso Tracker" />
+</head>
+<body class="page-forum">
+  <header class="topbar" id="topbar"></header>
+
+  <main class="app-shell">
+    <div class="page-header">
+      <div class="eyebrow">Community</div>
+      <h1>Ask the community</h1>
+      <p class="muted">Get advice on dialing in, gear, beans, and milk from other home baristas.</p>
+    </div>
+
+    <!-- First visit: pick a username and agree to the rules -->
+    <form class="card forum-setup" id="forum-setup" style="display:none;">
+      <h2 id="setup-title">Pick your community username</h2>
+      <p class="muted" id="setup-intro">Your username is what other members see on your questions and replies. Your real name and email stay private.</p>
+      <div class="field">
+        <label for="setup-username">Username</label>
+        <input type="text" id="setup-username" maxlength="20" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="e.g. crema_chaser" required />
+        <div class="muted field-hint" id="setup-username-hint">3 to 20 letters, numbers, or underscores.</div>
+      </div>
+      <div class="rules-box">
+        <h3>Community rules</h3>
+        <ul class="rules-list">
+          <li>Be kind and helpful. Everyone started as a beginner.</li>
+          <li>No harassment, hate speech, threats, or personal attacks.</li>
+          <li>No spam, scams, or unrelated advertising.</li>
+          <li>Keep posts safe for everyone. No sexual, violent, or illegal content.</li>
+          <li>Don't share anyone's personal information, including your own.</li>
+          <li>Only post photos you took or have permission to share.</li>
+        </ul>
+        <p class="muted">You can report posts and block members. A moderator reviews reports and removes posts or members that break these rules.</p>
+      </div>
+      <label class="agree-row"><input type="checkbox" id="setup-agree" /> I agree to the community rules</label>
+      <div id="setup-error" class="form-error" style="display:none;"></div>
+      <button type="submit" class="btn btn-primary">Join the community</button>
+    </form>
+
+    <div id="forum-main" style="display:none;">
+      <div class="forum-userbar">
+        <span class="muted">Posting as <strong id="my-username"></strong></span>
+        <button type="button" class="link-btn" id="change-username-btn">Change</button>
+        <span class="muted">·</span>
+        <button type="button" class="link-btn" id="show-rules-btn">Community rules</button>
+        <span id="mod-tools" style="display:none;">
+          <span class="muted">·</span>
+          <button type="button" class="link-btn" id="mod-btn">🛡️ Reports (<span id="report-count">0</span>)</button>
+        </span>
+      </div>
+
+      <!-- Topic list -->
+      <section id="forum-list-view">
+        <div class="toolbar">
+          <input type="search" id="forum-search" placeholder="Search questions..." />
+          <div class="spacer"></div>
+          <button type="button" class="btn btn-primary" id="ask-btn">+ Ask a question</button>
+        </div>
+        <div class="chip-select category-bar" id="category-bar"></div>
+        <div class="topic-list" id="topic-list"></div>
+      </section>
+
+      <!-- Single topic -->
+      <section id="forum-post-view" style="display:none;">
+        <a href="forum.html" class="back-link" id="back-to-list">← All questions</a>
+        <div id="post-detail"></div>
+        <h3 class="reply-heading" id="reply-heading"></h3>
+        <div id="reply-list"></div>
+        <div class="card" id="reply-form-wrap">
+          <form id="reply-form">
+            <div class="field">
+              <label for="reply-body">Your reply</label>
+              <textarea id="reply-body" maxlength="5000" required placeholder="Share what worked for you..."></textarea>
+            </div>
+            <div class="field photo-field">
+              <label for="reply-photo">Photo (optional)</label>
+              <div class="photo-preview" id="reply-photo-preview"></div>
+              <input type="file" id="reply-photo" accept="image/*" />
+            </div>
+            <button type="submit" class="btn btn-primary">Post reply</button>
+          </form>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Ask / edit a question -->
+  <div class="modal-backdrop" id="new-post-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="np-heading">Ask the community</h2>
+        <button class="modal-close" data-close="new-post-modal" aria-label="Close">✕</button>
+      </div>
+      <form id="new-post-form">
+        <div class="field">
+          <label for="np-category">Category</label>
+          <select id="np-category"></select>
+        </div>
+        <div class="field">
+          <label for="np-title">Question</label>
+          <input type="text" id="np-title" maxlength="140" required placeholder="e.g. Why are my shots sour even at 30 seconds?" />
+        </div>
+        <div class="field">
+          <label for="np-body">Details</label>
+          <textarea id="np-body" maxlength="5000" required placeholder="What have you tried? What does it taste like?"></textarea>
+        </div>
+        <div id="np-snapshot" style="display:none;"></div>
+        <div class="field photo-field" id="np-photo-field">
+          <label for="np-photo">Photo (optional)</label>
+          <div class="photo-preview" id="np-photo-preview"></div>
+          <input type="file" id="np-photo" accept="image/*" />
+        </div>
+        <button type="submit" class="btn btn-primary">Post</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Report -->
+  <div class="modal-backdrop" id="report-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Report this</h2>
+        <button class="modal-close" data-close="report-modal" aria-label="Close">✕</button>
+      </div>
+      <form id="report-form">
+        <p class="muted">Reports are private. A moderator will review it.</p>
+        <label class="radio-row"><input type="radio" name="report-reason" value="Spam or advertising" /> Spam or advertising</label>
+        <label class="radio-row"><input type="radio" name="report-reason" value="Harassment or hate" /> Harassment or hate</label>
+        <label class="radio-row"><input type="radio" name="report-reason" value="Inappropriate content" /> Inappropriate content</label>
+        <label class="radio-row"><input type="radio" name="report-reason" value="Personal information" /> Shares personal information</label>
+        <label class="radio-row"><input type="radio" name="report-reason" value="Other" /> Something else</label>
+        <div class="field" style="margin-top:10px;">
+          <label for="report-details">Anything else? (optional)</label>
+          <textarea id="report-details" maxlength="800"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Send report</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Change username -->
+  <div class="modal-backdrop" id="username-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Change username</h2>
+        <button class="modal-close" data-close="username-modal" aria-label="Close">✕</button>
+      </div>
+      <form id="username-form">
+        <div class="field">
+          <label for="change-username">New username</label>
+          <input type="text" id="change-username" maxlength="20" autocomplete="off" autocapitalize="off" spellcheck="false" required />
+          <div class="muted field-hint">3 to 20 letters, numbers, or underscores.</div>
+        </div>
+        <div id="change-username-error" class="form-error" style="display:none;"></div>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Rules -->
+  <div class="modal-backdrop" id="rules-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Community rules</h2>
+        <button class="modal-close" data-close="rules-modal" aria-label="Close">✕</button>
+      </div>
+      <ul class="rules-list">
+        <li>Be kind and helpful. Everyone started as a beginner.</li>
+        <li>No harassment, hate speech, threats, or personal attacks.</li>
+        <li>No spam, scams, or unrelated advertising.</li>
+        <li>Keep posts safe for everyone. No sexual, violent, or illegal content.</li>
+        <li>Don't share anyone's personal information, including your own.</li>
+        <li>Only post photos you took or have permission to share.</li>
+      </ul>
+      <p class="muted">Use 🚩 Report on anything that breaks these rules, or block a member to hide their posts. Questions? Email <a href="mailto:thejkexperience23@gmail.com">thejkexperience23@gmail.com</a>.</p>
+    </div>
+  </div>
+
+  <!-- Moderator reports -->
+  <div class="modal-backdrop" id="mod-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>🛡️ Open reports</h2>
+        <button class="modal-close" data-close="mod-modal" aria-label="Close">✕</button>
+      </div>
+      <div id="mod-report-list"></div>
+    </div>
+  </div>
+
+  <nav id="bottomnav"></nav>
+
+  <script src="js/supabase-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/cloud-data.js"></script>
+  <script src="js/forum-data.js"></script>
+  <script src="js/forum.js"></script>
+  <script src="js/pwa.js"></script>
+</body>
+</html>
