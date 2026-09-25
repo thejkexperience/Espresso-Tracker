@@ -1162,3 +1162,35 @@ legend {
   .gearcmp-hero-img { height: 110px; }
   .gearcmp-cards { flex-direction: column; }
 }
+
+/* ---------- Bean packaging photos ---------- */
+
+.bean-photo-field { max-width: 260px; }
+
+.bean-card-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.bean-card-title { flex: 1; min-width: 0; }
+
+.bean-card-title h3 { overflow-wrap: anywhere; }
+
+.bean-thumb {
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-2);
+}
+
+.bean-thumb-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  opacity: 0.6;
+}
