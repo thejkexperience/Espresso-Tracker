@@ -56,6 +56,8 @@ function setMode(mode) {
   const firstNameInput = document.getElementById("auth-firstname");
   firstNameField.style.display = isSignup ? "block" : "none";
   firstNameInput.required = isSignup;
+  document.getElementById("field-username").style.display = isSignup ? "block" : "none";
+  document.getElementById("auth-username").required = isSignup;
   hideMessages();
 }
 
@@ -65,16 +67,24 @@ async function onSubmit(e) {
   const email = document.getElementById("auth-email").value.trim();
   const password = document.getElementById("auth-password").value;
   const firstName = document.getElementById("auth-firstname").value.trim();
+  const username = document.getElementById("auth-username").value.trim();
   const submitBtn = document.getElementById("auth-submit");
   submitBtn.disabled = true;
 
   try {
     if (authMode === "signup") {
+      if (!/^[A-Za-z0-9_]{3,20}$/.test(username)) {
+        throw new Error("Usernames are 3 to 20 letters, numbers, or underscores (no spaces).");
+      }
+      const { data: available, error: nameErr } = await supabaseClient.rpc("espresso_username_available", { name: username });
+      if (!nameErr && available === false) {
+        throw new Error("That username is already taken. Please try another one.");
+      }
       const { data, error } = await supabaseClient.auth.signUp({
         email,
         password,
         options: {
-          data: { first_name: firstName },
+          data: { first_name: firstName, username },
           emailRedirectTo: getConfirmRedirectUrl()
         }
       });
