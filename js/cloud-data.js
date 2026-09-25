@@ -19,7 +19,8 @@ function beanFromRow(row) {
     price: row.price || "",
     history: row.history || "",
     notes: row.notes || "",
-    dateAdded: row.date_added
+    dateAdded: row.date_added,
+    photoPath: row.photo_path || ""
   };
 }
 
@@ -71,6 +72,26 @@ async function saveBean(bean) {
 
 async function deleteBean(id) {
   const { error } = await supabaseClient.from("beans").delete().eq("id", id);
+  if (error) throw error;
+}
+
+// ---------- Bean packaging photo ----------
+// Stored in the same private "brew-photos" bucket under
+// "<user_id>/beans/<bean_id>-<timestamp>.<ext>". Only the path lives on the
+// bean row; saveBean never touches it, so edits can't wipe a photo by accident.
+
+async function uploadBeanPhoto(beanId, file) {
+  const user = await getCurrentUser();
+  if (!user) throw new Error("You need to be signed in to upload a photo.");
+  const ext = ((file.name || "").split(".").pop() || "jpg").toLowerCase().replace(/[^a-z0-9]/g, "") || "jpg";
+  const path = `${user.id}/beans/${beanId}-${Date.now()}.${ext}`;
+  const { error } = await supabaseClient.storage.from("brew-photos").upload(path, file, { upsert: true });
+  if (error) throw error;
+  return path;
+}
+
+async function updateBeanPhotoPath(beanId, path) {
+  const { error } = await supabaseClient.from("beans").update({ photo_path: path || null }).eq("id", beanId);
   if (error) throw error;
 }
 
@@ -196,6 +217,16 @@ async function deleteBrewPhoto(path) {
   if (!path) return;
   const { error } = await supabaseClient.storage.from("brew-photos").remove([path]);
   if (error) console.error(error);
+}
+
+// Signs many paths in one request. Returns { path: url }.
+async function getSignedPhotoUrls(paths) {
+  const map = {};
+  if (!paths || !paths.length) return map;
+  const { data, error } = await supabaseClient.storage.from("brew-photos").createSignedUrls(paths, 3600);
+  if (error) { console.error(error); return map; }
+  (data || []).forEach(d => { if (d.signedUrl) map[d.path] = d.signedUrl; });
+  return map;
 }
 
 async function getSignedPhotoUrl(path) {
