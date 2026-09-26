@@ -285,3 +285,20 @@ function brewToSnapshot(brew) {
     tasteNotes: brew.feedback || ""
   };
 }
+
+// ---------- Moderators (owner only) ----------
+
+async function setModerator(username, makeModerator) {
+  const { data, error } = await supabaseClient.rpc("espresso_set_moderator", {
+    target_username: username, make_moderator: makeModerator
+  });
+  if (error) throw new Error(error.message);
+  return data;
+}
+
+async function listModerators() {
+  const { data, error } = await supabaseClient.from("espresso_profiles")
+    .select("id, username, is_owner").eq("is_moderator", true).order("username");
+  if (error) { console.error(error); return []; }
+  return data;
+}
