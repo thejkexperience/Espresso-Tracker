@@ -1322,3 +1322,17 @@ body.page-forum {
   .toolbar input[type="search"] { max-width: none; flex: 1 1 100%; }
   #ask-btn { width: 100%; }
 }
+
+/* ---------- Manage moderators ---------- */
+
+.add-mod-form { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0; }
+.add-mod-form input { flex: 1 1 180px; }
+.mod-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+.mod-row:last-child { border-bottom: none; }
