@@ -58,6 +58,10 @@
           <span class="muted">·</span>
           <button type="button" class="link-btn" id="mod-btn">🛡️ Reports (<span id="report-count">0</span>)</button>
         </span>
+        <span id="owner-tools" style="display:none;">
+          <span class="muted">·</span>
+          <button type="button" class="link-btn" id="manage-mods-btn">👑 Moderators</button>
+        </span>
       </div>
 
       <!-- Topic list -->
@@ -187,6 +191,23 @@
     </div>
   </div>
 
+  <!-- Manage moderators (owner only) -->
+  <div class="modal-backdrop" id="mods-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>👑 Manage moderators</h2>
+        <button class="modal-close" data-close="mods-modal" aria-label="Close">✕</button>
+      </div>
+      <p class="muted">Moderators can review reports and remove or restore posts. Only you can add or remove moderators.</p>
+      <form id="add-mod-form" class="add-mod-form">
+        <input type="text" id="add-mod-username" placeholder="Member's username" autocomplete="off" autocapitalize="off" spellcheck="false" required />
+        <button type="submit" class="btn btn-primary">Make moderator</button>
+      </form>
+      <div id="mods-error" class="form-error" style="display:none;"></div>
+      <div id="mods-list"></div>
+    </div>
+  </div>
+
   <!-- Moderator reports -->
   <div class="modal-backdrop" id="mod-modal">
     <div class="modal">
@@ -207,8 +228,8 @@
   <script src="js/app.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/cloud-data.js"></script>
-  <script src="js/forum-data.js?v=2"></script>
-  <script src="js/forum.js?v=2"></script>
+  <script src="js/forum-data.js?v=3"></script>
+  <script src="js/forum.js?v=3"></script>
   <script src="js/pwa.js"></script>
 </body>
 </html>
