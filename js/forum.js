@@ -93,6 +93,7 @@ async function enterForum() {
   document.getElementById("forum-main").style.display = "";
   document.getElementById("my-username").textContent = "@" + forumState.profile.username;
   document.getElementById("mod-tools").style.display = forumState.profile.is_moderator ? "" : "none";
+  document.getElementById("owner-tools").style.display = forumState.profile.is_owner ? "" : "none";
   forumState.blocked = await getBlockedIds();
 
   // Coming from the brew log with a shot to ask about?
@@ -585,6 +586,8 @@ function wireStaticControls() {
     toggleModal("username-modal", true);
   });
   document.getElementById("mod-btn").addEventListener("click", openModPanel);
+  document.getElementById("manage-mods-btn").addEventListener("click", openModsPanel);
+  document.getElementById("add-mod-form").addEventListener("submit", onAddMod);
   document.getElementById("show-rules-btn").addEventListener("click", () => toggleModal("rules-modal", true));
 
   document.querySelectorAll("[data-close]").forEach(b => b.addEventListener("click", () => toggleModal(b.dataset.close, false)));
@@ -603,4 +606,56 @@ async function checkSetupUsername() {
   const ok = await isUsernameAvailable(name);
   hint.textContent = ok ? "✔ Available" : "That username is taken. Try another one.";
   hint.style.color = ok ? "var(--color-success)" : "var(--color-danger)";
+}
+
+/* ---------- Manage moderators (owner only) ---------- */
+
+async function openModsPanel() {
+  document.getElementById("mods-error").style.display = "none";
+  toggleModal("mods-modal", true);
+  await renderMods();
+}
+
+async function renderMods() {
+  const el = document.getElementById("mods-list");
+  el.innerHTML = `<div class="muted">Loading…</div>`;
+  const mods = await listModerators();
+  if (!mods.length) { el.innerHTML = `<p class="muted">No moderators yet.</p>`; return; }
+  el.innerHTML = mods.map(m => `
+    <div class="mod-row">
+      <span><strong>@${escapeHtml(m.username)}</strong>${m.is_owner ? ` <span class="chip accent mod-chip">Owner</span>` : ""}</span>
+      ${m.is_owner ? "" : `<button type="button" class="btn btn-sm btn-danger" data-demote="${escapeHtml(m.username)}">Remove</button>`}
+    </div>`).join("");
+  el.querySelectorAll("[data-demote]").forEach(b => {
+    b.onclick = async () => {
+      if (!confirm(`Remove @${b.dataset.demote} as a moderator?`)) return;
+      try { await setModerator(b.dataset.demote, false); await renderMods(); }
+      catch (err) { showModsError(err.message); }
+    };
+  });
+}
+
+function showModsError(msg) {
+  const e = document.getElementById("mods-error");
+  e.textContent = msg || "Something went wrong. Please try again.";
+  e.style.display = "block";
+}
+
+async function onAddMod(e) {
+  e.preventDefault();
+  document.getElementById("mods-error").style.display = "none";
+  const input = document.getElementById("add-mod-username");
+  const name = input.value.trim().replace(/^@/, "");
+  if (!name) return;
+  const btn = e.target.querySelector("button[type=submit]");
+  btn.disabled = true;
+  try {
+    await setModerator(name, true);
+    input.value = "";
+    await renderMods();
+  } catch (err) {
+    showModsError(err.message);
+  } finally {
+    btn.disabled = false;
+  }
 }
