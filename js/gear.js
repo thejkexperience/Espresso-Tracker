@@ -17,6 +17,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("filter-tier").addEventListener("change", renderGear);
 });
 
+// Shown if a product photo is missing or fails to load.
+const GEAR_ICONS = { Machine: "☕", Grinder: "⚙️", Tool: "🧰" };
+
 function renderGear() {
   const el = document.getElementById("gear-grid");
   const query = document.getElementById("search-gear").value.toLowerCase().trim();
@@ -37,6 +40,10 @@ function renderGear() {
 
   el.innerHTML = items.map(g => `
     <div class="catalog-card">
+      <div class="gear-photo${g.image ? "" : " noimg"}">
+        ${g.image ? `<img src="${escapeHtml(g.image)}" alt="${escapeHtml(g.name)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentNode.classList.add('noimg');this.remove();" />` : ""}
+        <span class="gear-photo-fallback" aria-hidden="true">${GEAR_ICONS[g.category] || "⚙️"}</span>
+      </div>
       <div class="flex-between">
         <h3>${escapeHtml(g.name)}</h3>
         <span class="badge badge-light">${escapeHtml(g.tier)}</span>
@@ -45,6 +52,7 @@ function renderGear() {
       <div class="price">${escapeHtml(g.price)}</div>
       <p>${escapeHtml(g.notes)}</p>
       ${g.link ? `<a href="${escapeHtml(g.link)}" target="_blank" rel="noopener">Learn more ↗</a>` : ""}
+      ${g.imageCredit ? `<div class="gear-credit">Photo: ${escapeHtml(g.imageCredit)}</div>` : ""}
     </div>
   `).join("");
 }
