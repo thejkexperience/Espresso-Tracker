@@ -1336,3 +1336,28 @@ body.page-forum {
   border-bottom: 1px solid var(--color-border);
 }
 .mod-row:last-child { border-bottom: none; }
+
+
+/* ---------- Gear catalog product photos ---------- */
+.gear-photo {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: #ffffff;
+  border-radius: calc(var(--radius-md) - 4px);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+.gear-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.gear-photo-fallback { display: none; font-size: 44px; opacity: 0.55; }
+.gear-photo.noimg { background: var(--color-border); }
+.gear-photo.noimg .gear-photo-fallback { display: block; }
+.gear-credit { font-size: 11px; opacity: 0.6; margin-top: auto; }
