@@ -1,47 +1,49 @@
 /* ===========================================================
    Espresso Tracker — Shared Styles
-   Organic design system — warm cream ground, terracotta + sage
-   accents, Caprasimo display headings over Figtree body text.
+   "Roaster Label" design system — kraft paper ground, white
+   bag-label cards with ink borders, stamp red + ink green
+   accents. Zilla Slab headings, IBM Plex Sans body, and
+   IBM Plex Mono for numbers and label text.
    =========================================================== */
-@import url('https://fonts.googleapis.com/css2?family=Caprasimo&family=Figtree:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
 :root {
-  /* ---- Organic tokens ---- */
-  --color-bg: #f5ead8;
-  --color-surface: #ebddc5;
-  --color-surface-2: #eee7db;
-  --color-text: #201e1d;
-  --color-muted: #82796a;
-  --color-primary: #8c491a;
-  --color-primary-dark: #201e1d;
-  --color-accent: #c67139;
-  --color-accent-hover: #b2622d;
-  --color-accent-pressed: #8c491a;
-  --color-accent-on-dark: #f6a06b;
-  --color-accent-light: #ffe1d0;
-  --color-accent-2: #7a8a5e;
-  --color-accent-2-tint: #e1eecc;
-  --color-accent-2-text: #3d472b;
-  --color-accent-2-mid: #aebf92;
-  --color-border: rgba(32,30,29,0.14);
-  --color-border-strong: rgba(32,30,29,0.16);
-  --color-success: #3d472b;
-  --color-success-bg: #e1eecc;
-  --color-danger: #643312;
-  --color-danger-bg: #ffe1d0;
-  --color-ink: #201e1d;
-  --color-ink-text: #f5ead8;
-  --color-ink-text-muted: rgba(245,234,216,0.6);
+  /* ---- Roaster Label tokens ---- */
+  --color-bg: #d9c29c;            /* kraft paper */
+  --color-surface: #fbf7ee;       /* bag label */
+  --color-surface-2: #f1e7d4;     /* light kraft */
+  --color-text: #1b1a17;          /* ink */
+  --color-muted: #5b4a33;
+  --color-primary: #a3241b;       /* stamp red */
+  --color-primary-dark: #1b1a17;
+  --color-accent: #a3241b;
+  --color-accent-hover: #8a1d15;
+  --color-accent-pressed: #6f170f;
+  --color-accent-on-dark: #f0b64a; /* amber label on ink */
+  --color-accent-light: #f4dcd4;
+  --color-accent-2: #2f5d3a;      /* ink green */
+  --color-accent-2-tint: #dfe8d6;
+  --color-accent-2-text: #23452b;
+  --color-accent-2-mid: #8fae8a;
+  --color-border: rgba(27,26,23,0.55);
+  --color-border-strong: #1b1a17;
+  --color-success: #23452b;
+  --color-success-bg: #dfe8d6;
+  --color-danger: #8a1d15;
+  --color-danger-bg: #f4dcd4;
+  --color-ink: #1b1a17;
+  --color-ink-text: #f6efe1;
+  --color-ink-text-muted: rgba(246,239,225,0.62);
 
-  --color-neutral-100: #f9f4ed;
-  --color-neutral-200: #eee7db;
-  --color-neutral-300: #dcd3c4;
-  --color-neutral-400: #c0b6a5;
-  --color-neutral-500: #a19786;
-  --color-neutral-600: #82796a;
-  --color-neutral-700: #645c50;
-  --color-neutral-800: #474238;
-  --color-neutral-900: #2e2b25;
+  --color-neutral-100: #fffdf8;
+  --color-neutral-200: #efe6d5;
+  --color-neutral-300: #d8cbb2;
+  --color-neutral-400: #bfae90;
+  --color-neutral-500: #9d8a6b;
+  --color-neutral-600: #7a6a51;
+  --color-neutral-700: #5b4a33;
+  --color-neutral-800: #3d3325;
+  --color-neutral-900: #25201a;
 
   --space-1: 4.4px;
   --space-2: 8.8px;
@@ -50,21 +52,23 @@
   --space-6: 26.4px;
   --space-8: 35.2px;
 
-  --radius-sm: 8px;
-  --radius-md: 16px;
-  --radius-lg: 28px;
-  --radius-pill: 999px;
+  --radius-sm: 2px;
+  --radius-md: 3px;
+  --radius-lg: 4px;
+  --radius-pill: 3px;
 
-  --shadow-sm: 0 1px 2px rgba(46,43,37,0.14);
-  --shadow-md: 0 3px 10px rgba(46,43,37,0.16);
-  --shadow-lg: 0 12px 32px rgba(46,43,37,0.22);
+  --shadow-sm: none;
+  --shadow-md: 0 1px 0 rgba(27,26,23,0.25), 0 10px 24px rgba(52,36,12,0.22);
+  --shadow-lg: 0 1px 0 rgba(27,26,23,0.25), 0 18px 40px rgba(52,36,12,0.30);
 
-  --font-heading: 'Caprasimo', Georgia, "Times New Roman", serif;
-  --font-body: 'Figtree', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-heading: 'Zilla Slab', Rockwell, Georgia, serif;
+  --font-body: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
   /* kept for compatibility with existing rules/inline styles */
   --font-sans: var(--font-body);
   --font-serif: var(--font-heading);
 }
+
 
 * { box-sizing: border-box; }
 
@@ -106,28 +110,28 @@ body {
 }
 
 body.page-home {
-  background-image: linear-gradient(180deg, rgba(245,234,216,0.90) 0%, rgba(245,234,216,0.96) 380px, var(--color-bg) 700px), url("../images/backgrounds/home.jpg");
+  background-image: linear-gradient(180deg, rgba(217,194,156,0.90) 0%, rgba(217,194,156,0.97) 380px, var(--color-bg) 700px), url("../images/backgrounds/home.jpg");
 }
 body.page-brewlog {
-  background-image: linear-gradient(180deg, rgba(245,234,216,0.90) 0%, rgba(245,234,216,0.96) 380px, var(--color-bg) 700px), url("../images/backgrounds/brewlog.jpg");
+  background-image: linear-gradient(180deg, rgba(217,194,156,0.90) 0%, rgba(217,194,156,0.97) 380px, var(--color-bg) 700px), url("../images/backgrounds/brewlog.jpg");
 }
 body.page-beans {
-  background-image: linear-gradient(180deg, rgba(245,234,216,0.90) 0%, rgba(245,234,216,0.96) 380px, var(--color-bg) 700px), url("../images/backgrounds/beans.jpg");
+  background-image: linear-gradient(180deg, rgba(217,194,156,0.90) 0%, rgba(217,194,156,0.97) 380px, var(--color-bg) 700px), url("../images/backgrounds/beans.jpg");
 }
 body.page-recipes {
-  background-image: linear-gradient(180deg, rgba(245,234,216,0.90) 0%, rgba(245,234,216,0.96) 380px, var(--color-bg) 700px), url("../images/backgrounds/recipes.jpg");
+  background-image: linear-gradient(180deg, rgba(217,194,156,0.90) 0%, rgba(217,194,156,0.97) 380px, var(--color-bg) 700px), url("../images/backgrounds/recipes.jpg");
 }
 body.page-gear {
-  background-image: linear-gradient(180deg, rgba(245,234,216,0.90) 0%, rgba(245,234,216,0.96) 380px, var(--color-bg) 700px), url("../images/backgrounds/gear.jpg");
+  background-image: linear-gradient(180deg, rgba(217,194,156,0.90) 0%, rgba(217,194,156,0.97) 380px, var(--color-bg) 700px), url("../images/backgrounds/gear.jpg");
 }
 body.page-discover {
-  background-image: linear-gradient(180deg, rgba(245,234,216,0.90) 0%, rgba(245,234,216,0.96) 380px, var(--color-bg) 700px), url("../images/backgrounds/discover.jpg");
+  background-image: linear-gradient(180deg, rgba(217,194,156,0.90) 0%, rgba(217,194,156,0.97) 380px, var(--color-bg) 700px), url("../images/backgrounds/discover.jpg");
 }
 body.page-learn {
-  background-image: linear-gradient(180deg, rgba(245,234,216,0.90) 0%, rgba(245,234,216,0.96) 380px, var(--color-bg) 700px), url("../images/backgrounds/learn.jpg");
+  background-image: linear-gradient(180deg, rgba(217,194,156,0.90) 0%, rgba(217,194,156,0.97) 380px, var(--color-bg) 700px), url("../images/backgrounds/learn.jpg");
 }
 body.page-login {
-  background-image: linear-gradient(180deg, rgba(32,30,29,0.55) 0%, rgba(245,234,216,0.94) 420px, var(--color-bg) 700px), url("../images/backgrounds/login.jpg");
+  background-image: linear-gradient(180deg, rgba(32,30,29,0.55) 0%, rgba(217,194,156,0.95) 420px, var(--color-bg) 700px), url("../images/backgrounds/login.jpg");
 }
 
 a { color: var(--color-primary); text-decoration: none; }
@@ -1198,7 +1202,7 @@ legend {
 /* ---------- Community forum ---------- */
 
 body.page-forum {
-  background-image: linear-gradient(180deg, rgba(245,234,216,0.90) 0%, rgba(245,234,216,0.96) 380px, var(--color-bg) 700px), url("../images/backgrounds/home.jpg");
+  background-image: linear-gradient(180deg, rgba(217,194,156,0.90) 0%, rgba(217,194,156,0.97) 380px, var(--color-bg) 700px), url("../images/backgrounds/home.jpg");
 }
 
 .link-btn {
@@ -1361,3 +1365,219 @@ body.page-forum {
 .gear-photo.noimg { background: var(--color-border); }
 .gear-photo.noimg .gear-photo-fallback { display: block; }
 .gear-credit { font-size: 11px; opacity: 0.6; margin-top: auto; }
+
+
+/* ===========================================================
+   ROASTER LABEL LAYER
+   Overrides for rules above that hardcode round pills, soft
+   type, or the old display font. Kept at the end on purpose.
+   =========================================================== */
+
+::selection { background: rgba(163,36,27,0.25); }
+
+html, body { background-color: var(--color-bg); }
+body { font-size: 15px; }
+
+h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.01em; }
+h1 { font-size: 32px; line-height: 1.1; }
+
+/* ---- Label text: kickers, eyebrows, small caps ---- */
+.page-header .eyebrow,
+.home-kicker, .home-hero-kicker, .home-last-shot-kicker, .home-shelf-kicker,
+.home-brand-text-kicker, .shotlog-kicker, .shotlog-header-row,
+.dialin-kicker, .dialin-card-kicker, .dialin-attempts-kicker,
+.gearcmp-kicker, .livepull-kicker, .livepull-taste-kicker, .livepull-elapsed-label,
+.suggestion-box .suggestion-title, .stat-card .label, .snapshot-grid .muted {
+  font-family: var(--font-mono) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase;
+}
+.page-header .eyebrow {
+  display: inline-block;
+  color: var(--color-primary);
+  border: 1.5px solid currentColor;
+  padding: 3px 8px 2px;
+  margin-bottom: 10px;
+}
+.home-kicker, .shotlog-kicker, .dialin-kicker, .gearcmp-kicker { color: var(--color-primary) !important; }
+
+/* ---- Numbers read like a lot stamp ---- */
+.stat-card .value, .home-stat-tile .value, .home-last-shot-number .big,
+.livepull-elapsed, .livepull-yield-input, .livepull-yield-unit,
+.dialin-grind-value, .gearcmp-rating-value,
+.home-recent-ratio, .shotlog-row-ratio, .shotlog-row-mobile-ratio,
+.shotlog-row-time, .shotlog-row-grind, .home-recent-grind, .dialin-attempt-grind,
+.catalog-card .price, .snapshot-grid div {
+  font-family: var(--font-mono) !important;
+  font-variant-numeric: tabular-nums;
+}
+.stat-card .value, .home-stat-tile .value, .home-last-shot-number .big,
+.dialin-grind-value, .gearcmp-rating-value { font-weight: 600 !important; letter-spacing: -0.02em; }
+.livepull-elapsed { font-weight: 500 !important; }
+
+/* ---- Headings that used the old display face at 400 ---- */
+.home-greeting, .home-hero-title, .home-recent-head h2, .shotlog-title,
+.dialin-title, .gearcmp-title, .gearcmp-card-name, .livepull-bean,
+.livepull-bean-select, .livepull-taste-title, .home-brand-text-name,
+.home-brand-mobile, .brand, legend {
+  font-weight: 700 !important;
+}
+
+/* ---- Top bar: ink band with a red rule, like a bag seal ---- */
+.topbar { background: var(--color-ink); border-bottom: 3px solid var(--color-primary); }
+.brand { font-weight: 700; letter-spacing: 0.01em; }
+.brand-mark, .home-brand-icon-fallback {
+  border-radius: 3px !important;
+  background: var(--color-primary);
+  border: 1.5px solid var(--color-ink-text);
+  transform: rotate(-4deg);
+}
+nav.nav-menu { border-radius: 0 0 4px 4px; border: 1.5px solid #000; border-top: none; }
+nav.nav-menu a { border-radius: 3px; font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase; }
+nav.nav-menu a.active { background: var(--color-primary); color: var(--color-ink-text); }
+
+/* ---- Everything square: no pills ---- */
+.btn, .chip, .chip-select button, .badge, .dialin-badge,
+.account-toggle, .home-avatar-slot .account-toggle, .home-nav-item, .home-tag,
+.home-hero-btn, .shotlog-filter-group, .shotlog-filter-btn,
+.livepull-toggle, .livepull-reset, .livepull-taste-tag, .livepull-save-btn,
+input, select, textarea {
+  border-radius: 3px !important;
+}
+.home-last-shot-avatar, .dialin-avatar { border-radius: 4px !important; border: 1.5px solid var(--color-ink); }
+
+/* ---- Labels: white cards with ink borders ---- */
+.card, .stat-card, .brew-item, .catalog-card, .home-last-shot, .dialin-card,
+.gearcmp-card, .gearcmp-empty, .livepull-taste, .rules-box, .brew-snapshot,
+.suggestion-box, .home-shelf-card, .modal, .account-dropdown {
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-ink) !important;
+  box-shadow: none;
+}
+.modal, .account-dropdown { box-shadow: var(--shadow-md); }
+.suggestion-box, .rules-box, .brew-snapshot { background: var(--color-surface-2); border-style: dashed !important; }
+.home-stat-tile, .gearcmp-summary { border: 1.5px solid var(--color-ink) !important; background: var(--color-surface); }
+.home-stat-tile.accent .value { color: var(--color-primary); }
+.brew-item:hover, .catalog-card:hover, .topic-card:hover { border-color: var(--color-primary) !important; box-shadow: 3px 3px 0 var(--color-ink); }
+
+/* Label header strip: the first line of a card reads like a bag label */
+.card > h2:first-child, .card > h3:first-child {
+  padding-bottom: 8px;
+  border-bottom: 1.5px dashed rgba(27,26,23,0.45);
+}
+
+.home-sidebar { background: var(--color-surface-2); border-right: 1.5px solid var(--color-ink); }
+.home-nav-item { font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase; color: rgba(27,26,23,0.7); }
+.home-nav-item.active { background: var(--color-ink); color: var(--color-ink-text); }
+
+.home-hero-ink { border: 1.5px solid #000; }
+.home-hero-kicker { color: var(--color-accent-on-dark) !important; }
+
+.home-bottomnav { background: var(--color-surface); border-top: 1.5px solid var(--color-ink); box-shadow: none; }
+.home-bottomnav a, .home-bottomnav button { font-family: var(--font-mono); letter-spacing: 0.03em; text-transform: uppercase; font-size: 10px; }
+.home-bottomnav a.active { color: var(--color-primary); }
+
+/* ---- Buttons: stamped, uppercase mono ---- */
+.btn, .home-hero-btn, .livepull-toggle, .livepull-save-btn {
+  font-family: var(--font-mono) !important;
+  font-weight: 600 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 13px;
+}
+.btn { border: 1.5px solid var(--color-ink); padding: 10px 16px; }
+.btn-sm { font-size: 11px; padding: 6px 10px; }
+.btn-primary, .btn-accent, .home-hero-btn {
+  background: var(--color-primary); color: #fff8ec; border-color: var(--color-ink);
+}
+.btn-primary:hover, .btn-accent:hover, .home-hero-btn:hover { background: var(--color-accent-hover); color: #fff8ec; }
+.btn-outline { color: var(--color-ink); border-color: var(--color-ink); background: transparent; }
+.btn-outline:hover { background: rgba(27,26,23,0.07); }
+.btn-danger { background: var(--color-surface); color: var(--color-danger); border-color: var(--color-danger); }
+.btn-danger:hover { background: var(--color-danger-bg); }
+.home-hero-btn { border: 1.5px solid var(--color-accent-on-dark); }
+.livepull-toggle { color: #fff8ec; }
+.livepull-save-btn { font-size: 12px; }
+
+/* ---- Chips and tags: ink stamps ---- */
+.chip, .home-tag, .badge, .dialin-badge {
+  background: transparent !important;
+  border: 1.5px solid currentColor;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 11px;
+}
+.chip { color: var(--color-ink); }
+.chip.accent, .home-tag.negative { color: var(--color-primary); }
+.chip.success, .home-tag.positive, .dialin-badge { color: var(--color-accent-2); }
+.badge-light { background: var(--color-surface) !important; color: var(--color-ink); }
+
+.chip-select button, .livepull-taste-tag {
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-ink);
+  color: var(--color-ink);
+}
+.chip-select button.selected, .livepull-taste-tag.selected {
+  background: var(--color-ink); color: var(--color-ink-text); border-color: var(--color-ink);
+}
+.chip-select button:hover { border-color: var(--color-primary); }
+
+.shotlog-filter-group { background: var(--color-surface); border: 1.5px solid var(--color-ink); }
+.shotlog-filter-btn { font-family: var(--font-mono); text-transform: uppercase; font-size: 11px; letter-spacing: 0.06em; }
+.shotlog-filter-btn.active { background: var(--color-ink); color: var(--color-ink-text); }
+
+/* ---- Forms: typed onto the label ---- */
+input[type="text"], input[type="number"], input[type="date"], input[type="time"],
+input[type="search"], input[type="url"], input[type="email"], input[type="password"], select, textarea {
+  background: var(--color-neutral-100);
+  border: 1.5px solid rgba(27,26,23,0.55);
+}
+input[type="number"], input[type="date"], input[type="time"] { font-family: var(--font-mono); }
+input:focus, select:focus, textarea:focus {
+  border-color: var(--color-ink);
+  box-shadow: 0 0 0 3px rgba(163,36,27,0.18);
+}
+label { font-weight: 600; }
+fieldset { border: 1.5px dashed rgba(27,26,23,0.5); }
+.rating-input button.filled, .home-recent-stars { color: var(--color-primary); }
+
+/* ---- Lists and rows ---- */
+.home-recent-row-desktop, .home-recent-row-mobile, .shotlog-row, .shotlog-row-mobile {
+  border-top: 1.5px dashed rgba(27,26,23,0.35);
+}
+.home-recent-list, .shotlog-list { border-bottom: 1.5px solid var(--color-ink); }
+
+/* ---- Bars and meters: ink rails ---- */
+.dialin-slider-rail, .gearcmp-bar-track, .dialin-attempt-bar { background: var(--color-neutral-300); }
+.dialin-slider-thumb { background: var(--color-primary); border: 2px solid var(--color-ink); box-shadow: none; }
+.gearcmp-bar-fill { background: var(--color-ink); }
+
+/* ---- Photos sit in a label frame ---- */
+.bean-thumb, .topic-thumb, .post-photo, .photo-preview, .gear-photo {
+  border: 1.5px solid var(--color-ink) !important;
+  border-radius: 2px !important;
+}
+.gearcmp-hero-img { border-radius: 4px; border: 1.5px solid var(--color-ink); }
+.timeline { border-left-color: var(--color-ink); border-left-style: dashed; }
+.timeline-item::before { border-radius: 2px; background: var(--color-primary); border-color: var(--color-ink); }
+.timeline-item .year { font-family: var(--font-mono); letter-spacing: 0.04em; }
+
+.reply-card.accepted { border: 2px solid var(--color-accent-2) !important; background: var(--color-accent-2-tint); }
+.gear-credit { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.04em; }
+
+/* ---- Live pull keeps its bare, on-ink inputs ---- */
+.livepull-page input, .livepull-page select {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  color: inherit;
+}
+.livepull-meta input, .livepull-bean-select { border-bottom: 1px dashed rgba(246,239,225,0.35) !important; }
+.livepull-yield-input { width: 3.2em !important; color: var(--color-accent-on-dark) !important; }
+.livepull-card { border: 1.5px solid #000; }
+
+.gearcmp-section { margin-top: 24px; }
