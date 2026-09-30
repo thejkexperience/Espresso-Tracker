@@ -116,7 +116,7 @@
       .ai-status.err{color:var(--color-danger,#a3241b)}
       .ai-status.ok{color:var(--color-accent-2,#2f5d3a)}
       .ai-filled{box-shadow:0 0 0 3px rgba(47,93,58,.35)!important;transition:box-shadow .3s}
-      .ai-pour{margin-top:16px;border:1.5px solid var(--color-ink,#1b1a17);border-radius:3px;background:var(--color-surface,#fbf7ee);padding:14px}
+      .ai-pour{width:100%;max-width:480px;box-sizing:border-box;color:var(--color-ink,#1b1a17);margin-top:16px;border:1.5px solid var(--color-ink,#1b1a17);border-radius:3px;background:var(--color-surface,#fbf7ee);padding:14px}
       .ai-pour-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
       .ai-pour-kicker{font-family:var(--font-mono,monospace);font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:12px;color:var(--color-primary,#a3241b)}
       .ai-pour-help{font-size:13px;color:rgba(27,26,23,.72);margin:6px 0 10px}
