@@ -269,7 +269,7 @@
   }
 
   function setupPour() {
-    const card = $("livepull-card");
+    const card = $("livepull-card") || document.querySelector(".livepull-card");
     if (!card || $("ai-pour")) return;
     const box = document.createElement("section");
     box.id = "ai-pour";
