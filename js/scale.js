@@ -263,7 +263,7 @@
     const st = document.createElement("style");
     st.id = "jk-scale-style";
     st.textContent = `
-      .jk-scale{margin-top:16px;border:1.5px solid var(--color-ink,#1b1a17);border-radius:3px;background:var(--color-surface,#fbf7ee);padding:14px}
+      .jk-scale{width:100%;max-width:480px;box-sizing:border-box;color:var(--color-ink,#1b1a17);margin-top:16px;border:1.5px solid var(--color-ink,#1b1a17);border-radius:3px;background:var(--color-surface,#fbf7ee);padding:14px}
       .jk-scale-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
       .jk-scale-kicker{font-family:var(--font-mono,monospace);font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:12px;color:var(--color-primary,#a3241b)}
       .jk-scale-read{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-top:10px}
