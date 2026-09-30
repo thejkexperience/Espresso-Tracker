@@ -40,52 +40,24 @@
   const videoRow = (...vs) => `<div class="lg-video-row">${vs.map(videoCard).join("")}</div>`;
 
   /* ---------------- diagrams (inline SVG) ---------------- */
+  const ART = window.LG_ART;
   const INK = "currentColor";
 
   const svgPuckPrep = `
   <ol class="lg-prep">
     ${[
-      ["Grind", "Weigh the beans and grind fresh."],
-      ["Dose", "Grind into the basket and check the weight."],
-      ["WDT", "Stir with fine needles to break clumps."],
-      ["Tamp", "Press level and firm, once."],
-      ["Screen", "Optional puck screen on top."],
-      ["Brew", "Lock in, start, and weigh the yield."],
-    ].map(([t, s], i) => `<li><span class="lg-prep-n">${i + 1}</span><b>${t}</b><small>${s}</small></li>`).join("")}
+      ["Grind", "Weigh the beans and grind fresh.", "grind"],
+      ["Dose", "Grind into the basket and check the weight.", "dose"],
+      ["WDT", "Stir with fine needles to break clumps.", "wdt"],
+      ["Tamp", "Press level and firm, once.", "tamp"],
+      ["Screen", "Optional puck screen on top.", "screen"],
+      ["Brew", "Lock in, start, and weigh the yield.", "brew"],
+    ].map(([t, s, k], i) => `<li>${ART.stepIcon(k)}<span class="lg-prep-n">${i + 1}</span><b>${t}</b><small>${s}</small></li>`).join("")}
   </ol>`;
 
-  const svgPortafilter = `
-  <svg viewBox="0 0 420 250" class="lg-svg lg-svg-pf" role="img" aria-label="Cross section of the group head, puck and basket">
-    <rect x="40" y="10" width="220" height="38" rx="4" fill="var(--color-surface-2,#f1e7d4)" stroke="${INK}" stroke-width="1.5"/>
-    <text x="150" y="34" text-anchor="middle" font-size="14" fill="${INK}">Group head</text>
-    <line x1="60" y1="58" x2="240" y2="58" stroke="${INK}" stroke-width="3" stroke-dasharray="6 4"/>
-    <rect x="70" y="68" width="160" height="8" fill="#9aa0a6" stroke="${INK}"/>
-    <path d="M70 78 L230 78 L224 146 L76 146 Z" fill="#6b4a2b" stroke="${INK}" stroke-width="1.5"/>
-    <text x="150" y="118" text-anchor="middle" font-size="15" fill="#f6efe1" font-weight="700">Coffee puck</text>
-    <path d="M60 68 L240 68 L232 154 L68 154 Z" fill="none" stroke="${INK}" stroke-width="2.5"/>
-    <line x1="76" y1="152" x2="224" y2="152" stroke="${INK}" stroke-width="2" stroke-dasharray="2 3"/>
-    <path d="M50 156 Q150 196 250 156" fill="none" stroke="${INK}" stroke-width="2.5"/>
-    <path d="M140 186 q10 20 0 45" stroke="#8a5a2b" stroke-width="5" fill="none" stroke-linecap="round"/>
-    <path d="M160 186 q-10 20 0 45" stroke="#8a5a2b" stroke-width="5" fill="none" stroke-linecap="round"/>
-    ${[["Shower screen", 58, 244], ["Puck screen", 72, 232], ["Coffee bed", 112, 226], ["Basket holes", 152, 226], ["Portafilter", 176, 222], ["Espresso", 214, 160]]
-      .map(([t, y, x0]) => `<line x1="${x0}" y1="${y}" x2="290" y2="${y}" stroke="${INK}" stroke-width="1"/><text x="296" y="${y + 5}" font-size="14" fill="${INK}">${t}</text>`).join("")}
-  </svg>`;
+  const svgPortafilter = ART.portafilter();
 
-  const pitcher = (k) => {
-    const surf = k ? 96 : 104, tipX = k ? 128 : 120, tipY = k ? 126 : 110;
-    return `<svg viewBox="0 0 270 230" class="lg-svg" role="img" aria-label="${k ? "Texturing" : "Stretching"} wand position">
-      <path d="M40 50 L200 50 L190 215 L50 215 Z" fill="#fffaf0" stroke="${INK}" stroke-width="2"/>
-      <path d="M200 50 L224 40" stroke="${INK}" stroke-width="2"/>
-      <path d="M41 50 L199 50 L198 ${surf} L42 ${surf} Z" fill="#f4efe6"/>
-      <line x1="42" y1="${surf}" x2="198" y2="${surf}" stroke="#b9a98f" stroke-width="2" stroke-dasharray="5 4"/>
-      <text x="206" y="${surf + 4}" font-size="12" fill="${INK}">milk line</text>
-      <line x1="${tipX + 22}" y1="8" x2="${tipX}" y2="${tipY}" stroke="#555" stroke-width="8" stroke-linecap="round"/>
-      <circle cx="${tipX}" cy="${tipY}" r="6" fill="var(--color-primary,#a3241b)"/>
-      ${k ? `<ellipse cx="120" cy="170" rx="52" ry="26" fill="none" stroke="var(--color-accent-2,#2f5d3a)" stroke-width="3" stroke-dasharray="9 6"/>
-             <path d="M168 160 l8 10 l-12 3" fill="none" stroke="var(--color-accent-2,#2f5d3a)" stroke-width="3"/>`
-          : `<g fill="#cfc3ad"><circle cx="100" cy="98" r="4"/><circle cx="112" cy="90" r="3"/><circle cx="138" cy="96" r="4"/><circle cx="128" cy="86" r="3"/></g>`}
-    </svg>`;
-  };
+  const pitcher = (k) => ART.pitcher(!!k);
   const svgWand = `
   <div class="lg-fig-grid">
     <figure class="lg-fig">${pitcher(0)}<figcaption><b>Step 1: Stretch.</b> Tip just under the surface. Listen for a soft tss tss. Air goes in and the milk grows.</figcaption></figure>
@@ -109,20 +81,11 @@
   </ol>
   <p class="muted lg-note">Hand trick: when the pitcher is too hot to hold for more than 2 or 3 seconds, you are close to 60°C.</p>`;
 
-  const cup = (foam, wide) => {
-    const w = wide ? 176 : 150, half = w / 2, cx = 100, top = 20, bottom = 130;
-    return `<svg viewBox="0 0 220 140" class="lg-svg" role="img" aria-hidden="true">
-      <path d="M${cx - half} ${top} L${cx + half} ${top} L${cx + half - 18} ${bottom} L${cx - half + 18} ${bottom} Z" fill="#8a5a2b" stroke="${INK}" stroke-width="2"/>
-      <path d="M${cx - half + 12} ${top + 70} L${cx + half - 12} ${top + 70} L${cx + half - 18} ${bottom} L${cx - half + 18} ${bottom} Z" fill="#3b2412"/>
-      <rect x="${cx - half + 1}" y="${top + 1}" width="${w - 2}" height="${foam}" fill="#fff6e6"/>
-      <path d="M${cx + half} ${top + 25} q24 5 0 40" fill="none" stroke="${INK}" stroke-width="2.5"/>
-    </svg>`;
-  };
   const svgCups = `
   <div class="lg-fig-grid lg-fig-3">
-    <figure class="lg-fig">${cup(6, false)}<figcaption><b>Flat white</b> 5 to 6 oz. Thin foam, about 0.5 cm.</figcaption></figure>
-    <figure class="lg-fig">${cup(12, true)}<figcaption><b>Latte</b> 8 to 12 oz. About 1 cm of foam.</figcaption></figure>
-    <figure class="lg-fig">${cup(30, false)}<figcaption><b>Cappuccino</b> 5 to 6 oz. 1.5 to 2 cm of foam.</figcaption></figure>
+    <figure class="lg-fig">${ART.cup("flat")}<figcaption><b>Flat white</b> 5 to 6 oz. Thin foam, about 0.5 cm.</figcaption></figure>
+    <figure class="lg-fig">${ART.cup("latte")}<figcaption><b>Latte</b> 8 to 12 oz. About 1 cm of foam.</figcaption></figure>
+    <figure class="lg-fig">${ART.cup("capp")}<figcaption><b>Cappuccino</b> 5 to 6 oz. 1.5 to 2 cm of foam.</figcaption></figure>
   </div>
   <p class="muted lg-note">Darkest layer is espresso, brown is steamed milk, white is foam.</p>`;
 
@@ -206,6 +169,27 @@
     ["Almond, soy, others", "Vary a lot by brand. Look for barista editions, and steam a little cooler to avoid splitting."],
   ];
 
+  /* ---------------- tool photos ---------------- */
+  const PHOTO_TYPE = { "Espresso scale": "Scale", "Tamper": "Tamper", "WDT tool": "Distribution tool (WDT)", "Milk pitcher": "Milk pitcher", "Puck screen": "Puck screen", "Bottomless portafilter": "Bottomless portafilter" };
+  function catalogItem(type) {
+    try {
+      const c = typeof GEAR_CATALOG !== "undefined" ? GEAR_CATALOG : null;
+      if (!c) return null;
+      const arr = Array.isArray(c) ? c : Object.values(c).flat();
+      return arr.find((g) => g && g.type === type && g.image) || null;
+    } catch (_) { return null; }
+  }
+  function toolMedia(name) {
+    const g = PHOTO_TYPE[name] && catalogItem(PHOTO_TYPE[name]);
+    const art = ART.TOOL_ART[name];
+    if (g) {
+      return `<figure class="lg-tool-media photo">
+        <img src="${g.image}" alt="${g.name}" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('figure').classList.add('noimg')">
+        <figcaption>${g.name}${g.imageCredit ? ` · ${g.imageCredit}` : ""}</figcaption></figure>`;
+    }
+    return art ? `<figure class="lg-tool-media">${art()}</figure>` : "";
+  }
+
   /* ---------------- render ---------------- */
   const stars = (n) => `<span class="lg-impact" aria-label="Impact ${n} of 5">${"●".repeat(n)}<span>${"●".repeat(5 - n)}</span></span>`;
   const priClass = (p) => /must/i.test(p) ? "must" : /upgrade/i.test(p) ? "up" : "nice";
@@ -238,10 +222,11 @@
         <h3 class="lg-h3">How a shot is prepped</h3>
         ${svgPuckPrep}
         <h3 class="lg-h3">What is inside the portafilter</h3>
-        ${svgPortafilter}
+        <div class="lg-pf-wrap">${svgPortafilter}</div>
         <div class="lg-tool-grid">
           ${TOOLS.map((t) => `
             <article class="lg-tool">
+              ${toolMedia(t.name)}
               <div class="lg-tool-head"><span class="lg-tool-icon">${t.icon}</span><h3>${t.name}</h3><span class="lg-stamp ${priClass(t.pri)}">${t.pri}</span></div>
               <p><b>What it is:</b> ${t.what}</p>
               <p><b>Why it matters:</b> ${t.why}</p>
@@ -347,7 +332,8 @@
       .lg-fig-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
       .lg-fig-3{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
       .lg-fig{margin:0;background:var(--color-surface,#fbf7ee);border:1.5px solid var(--color-ink,#1b1a17);border-radius:3px;overflow:hidden}
-      .lg-fig .lg-svg{border:none;border-radius:0;max-height:260px}
+      .lg-fig .lg-svg,.lg-fig .lg-art{border:none;border-radius:0;max-height:280px}
+      .lg-pf-wrap{background:#f7f2e8;border:1.5px solid var(--color-ink,#1b1a17);border-radius:3px;overflow:hidden}
       .lg-fig figcaption{padding:8px 12px 12px;font-size:13.5px;line-height:1.45;border-top:1.5px dashed rgba(27,26,23,.35)}
       .lg-svg-bar{padding:6px 8px;max-width:640px}
       .lg-svg-pf{max-width:520px}
@@ -356,7 +342,16 @@
       .lg-note{margin-top:8px;font-size:13px}
       .lg-svg-small{font-size:10.5px;line-height:1.3;color:var(--color-ink,#1b1a17);font-family:var(--font-body,inherit)}
       .lg-tool-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-top:18px}
-      .lg-tool{background:var(--color-surface,#fbf7ee);border:1.5px solid var(--color-ink,#1b1a17);border-radius:3px;padding:14px}
+      .lg-art{width:100%;height:auto;display:block}
+      .lg-art-wide{max-width:620px;margin:0 auto}
+      .lg-tool-media{margin:-14px -14px 12px;border-bottom:1.5px solid var(--color-ink,#1b1a17);background:#f7f2e8;position:relative}
+      .lg-tool-media .lg-art{aspect-ratio:3/2;max-height:170px;margin:0 auto}
+      .lg-tool-media.photo{background:#fff;height:170px;display:flex;align-items:center;justify-content:center}
+      .lg-tool-media.photo img{max-width:88%;max-height:140px;object-fit:contain}
+      .lg-tool-media.photo figcaption{position:absolute;left:6px;bottom:4px;right:6px;font-family:var(--font-mono,monospace);font-size:9.5px;color:rgba(27,26,23,.55);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+      .lg-tool-media.noimg{display:none}
+      .lg-step-art{width:52px;height:52px;display:block;margin:0 auto 4px}
+      .lg-tool{background:var(--color-surface,#fbf7ee);border:1.5px solid var(--color-ink,#1b1a17);border-radius:3px;padding:14px;overflow:hidden}
       .lg-tool p{margin:8px 0 0;font-size:14px;line-height:1.5}
       .lg-tool-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding-bottom:8px;border-bottom:1.5px dashed rgba(27,26,23,.4)}
       .lg-tool-head h3{margin:0;font-size:17px;flex:1}
@@ -401,7 +396,16 @@
     document.head.appendChild(st);
   }
 
-  function boot() { styles(); render(); }
+  function boot() {
+    if (!ART) return;
+    if (!document.getElementById("la-defs")) {
+      const holder = document.createElement("div");
+      holder.id = "la-defs";
+      holder.innerHTML = ART.DEFS;
+      document.body.prepend(holder);
+    }
+    styles(); render();
+  }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
   else boot();
 })();
