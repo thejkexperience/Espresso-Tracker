@@ -5,12 +5,14 @@
 const NAV_ITEMS = [
   { href: "index.html", label: "Home", icon: "☕" },
   { href: "brew-log.html", label: "Brew Log", icon: "📝" },
+  { href: "live-pull.html", label: "Live Pull", icon: "⏱️" },
   { href: "beans.html", label: "Beans", icon: "🌱" },
   { href: "recipes.html", label: "Recipes", icon: "📖" },
   { href: "gear.html", label: "Gear", icon: "⚙️" },
   { href: "discover.html", label: "Discover", icon: "🗺️" },
   { href: "forum.html", label: "Community", icon: "💬" },
-  { href: "learn.html", label: "Learn", icon: "🎓" }
+  { href: "learn.html", label: "Learn", icon: "🎓" },
+  { href: "index.html?tour=1", label: "Take the tour", icon: "🧭" }
 ];
 
 function renderShell(activePage, opts) {
