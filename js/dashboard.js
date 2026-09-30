@@ -17,18 +17,20 @@ document.addEventListener("DOMContentLoaded", async () => {
   const session = await initHomeSession();
   if (!session) return; // redirect to setup/login already underway
 
-  renderAccountMenu(document.getElementById("home-sidebar-account"), session);
-  renderAccountMenu(document.getElementById("home-avatar-slot"), session);
-  renderKickerAndGreeting(session);
+  // Wire up the More sheet first so a render error can never leave it dead.
+  setupMoreSheet();
 
-  await Promise.all([
+  const safe = (fn) => { try { fn(); } catch (e) { console.error(e); } };
+  safe(() => renderAccountMenu(document.getElementById("home-sidebar-account"), session));
+  safe(() => renderAccountMenu(document.getElementById("home-avatar-slot"), session));
+  safe(() => renderKickerAndGreeting(session));
+
+  await Promise.allSettled([
     renderShelf(),
     renderLastShot(),
     renderStatsNew(),
     renderRecentNew()
   ]);
-
-  setupMoreSheet();
 });
 
 // ---------- Session (no shared shell — this page draws its own) ----------
@@ -168,7 +170,7 @@ function renderKickerAndGreeting(session) {
 
   const hour = now.getHours();
   const timeGreeting = hour < 12 ? "Morning" : hour < 18 ? "Afternoon" : "Evening";
-  const firstName = (session.user.user_metadata && session.user_metadata.first_name) || "";
+  const firstName = (session.user && session.user.user_metadata && session.user.user_metadata.first_name) || "";
   const greetingEl = document.getElementById("home-greeting");
   if (greetingEl) greetingEl.textContent = firstName ? `${timeGreeting}, ${firstName}` : timeGreeting;
 }
