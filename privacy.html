@@ -31,7 +31,7 @@
     <div class="policy-wrap">
       <div class="card">
         <h1>Privacy Policy</h1>
-        <p class="muted">Effective September 23, 2026. Updated September 25, 2026 to add the community forum.</p>
+        <p class="muted">Effective September 23, 2026. Updated September 29, 2026 to add AI features and Bluetooth scales.</p>
 
         <p>The JK Espresso Tracker is run by TheJKExperience. This page explains what information the app collects, how it is used, and the choices you have. We keep it simple: we only collect what the app needs to work, and we never sell your information.</p>
 
@@ -56,12 +56,19 @@
         <p>The forum is only visible to signed in members. Anything you post there, along with your username, can be seen by other members. Your real name and email address are never shown. Please don't post personal information.</p>
         <p>You can edit or delete your own questions and replies at any time. Members can report posts and block other members. A moderator may remove posts or accounts that break the community rules.</p>
 
+        <h2>AI features and Bluetooth scales</h2>
+        <p>If you use "Scan bag", the photo of your coffee bag is sent to Anthropic's Claude AI to read the label and fill in the bean details. The photo is only saved to your account if you save the bean.</p>
+        <p>If you use "Film the pour" or "Get AI shot review", a few still frames from your camera (about one every two to three seconds while the shot timer runs) are sent to Claude along with your shot numbers and taste notes, so it can suggest your next shot. Only still frames are sent. Video and sound are never recorded or uploaded, and the frames are not saved to your account. The suggestion is saved with your shot when you save it.</p>
+        <p>Anthropic does not use this information to train its AI models. These features are optional and only run when you tap them. To keep costs fair, we count how many times each account uses them per day.</p>
+        <p>If you connect a Bluetooth scale, weight readings go straight from the scale to the app on your device. They are not sent anywhere except as part of an AI shot review you ask for.</p>
+
         <h2>Services we rely on</h2>
         <p>A few outside services help run the app. Each only receives what it needs to do its job:</p>
         <ul>
           <li><strong>Supabase</strong> stores your account and everything you save in the app. Your data is private to your account, and other users cannot see it.</li>
           <li><strong>Google</strong> handles "Continue with Google" sign in, and Gmail sends our account emails.</li>
           <li><strong>GitHub Pages</strong> hosts the website itself.</li>
+          <li><strong>Anthropic</strong> (Claude AI) reads bag photos and shot review frames when you use the AI features.</li>
           <li><strong>OpenStreetMap</strong> powers the near me search. When you use it, your approximate location is sent to OpenStreetMap to find nearby shops.</li>
           <li><strong>jsDelivr and Google Fonts</strong> deliver some of the code and fonts the pages use.</li>
         </ul>
