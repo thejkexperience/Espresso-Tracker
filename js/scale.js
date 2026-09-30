@@ -294,7 +294,7 @@
   }
 
   function setupLivePull() {
-    const card = $("livepull-card");
+    const card = $("livepull-card") || document.querySelector(".livepull-card");
     if (!card || $("jk-scale")) return;
     injectStyles();
     const box = document.createElement("section");
