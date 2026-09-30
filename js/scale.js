@@ -176,6 +176,10 @@
     if (!d) return;
     let w = null;
     try { w = d.parse(ev.target.value); } catch (_) { w = null; }
+    pushWeight(w);
+  }
+
+  function pushWeight(w) {
     if (w == null || !Number.isFinite(w) || Math.abs(w) > 5000) return;
     state.weight = Math.round(w * 10) / 10;
     if (state.recording) {
@@ -191,7 +195,43 @@
     emit();
   }
 
+  /* ---------- demo scale (pretend shot, no hardware) ---------- */
+  let demoTimer = null, demoStart = 0, demoW = 0, demoLast = 0;
+  const DEMO_DRIVER = {
+    id: "demo", label: "Demo scale", demo: true,
+    tare() { demoRestart(); return []; },
+  };
+  function demoFlow(t) {
+    if (t < 5) return 0;                       // waiting for first drips
+    if (t < 9) return 2.1 * (t - 5) / 4;       // flow builds
+    if (t < 24) return 2.1 - 0.025 * (t - 9);  // steady pour
+    if (t < 27) return 1.7 * (27 - t) / 3;     // tapering off
+    return 0;                                  // done
+  }
+  function demoRestart() { demoStart = Date.now(); demoLast = demoStart; demoW = 0; pushWeight(0); }
+  function connectDemo() {
+    disconnect();
+    state.error = "";
+    state.driver = DEMO_DRIVER;
+    state.name = "Demo scale (pretend)";
+    state.connected = true;
+    demoRestart();
+    demoTimer = setInterval(() => {
+      const now = Date.now();
+      const t = (now - demoStart) / 1000;
+      const dt = (now - demoLast) / 1000;
+      demoLast = now;
+      const f = demoFlow(t);
+      demoW += f * dt;
+      const noise = f > 0 ? (Math.random() - 0.5) * 0.1 : 0;
+      pushWeight(demoW + noise);
+    }, 200);
+    emit();
+  }
+
   function cleanup() {
+    if (demoTimer) clearInterval(demoTimer);
+    demoTimer = null;
     if (hbTimer) clearInterval(hbTimer);
     hbTimer = null;
     try { notifyChar && notifyChar.removeEventListener("characteristicvaluechanged", onValue); } catch (_) {}
@@ -219,6 +259,7 @@
 
   async function tare() {
     if (!state.connected || !state.driver) return;
+    if (state.driver.demo) { state.driver.tare(); return; }
     await send(state.driver.tare());
   }
 
@@ -248,7 +289,7 @@
   window.JKScale = {
     get state() { return state; },
     DRIVERS,
-    connect, disconnect, tare,
+    connect, connectDemo, disconnect, tare,
     startRecording, stopRecording, curveSummary,
     on(fn) { listeners.add(fn); return () => listeners.delete(fn); },
   };
@@ -277,6 +318,9 @@
       .jk-scale-msg.err{color:var(--color-danger,#a3241b)}
       .jk-scale-more{background:none;border:none;padding:0;margin-top:8px;font-size:12px;text-decoration:underline;color:inherit;cursor:pointer}
       .jk-scale.off .jk-scale-read,.jk-scale.off .jk-scale-live{display:none}
+      .jk-scale-links{display:flex;gap:14px;flex-wrap:wrap}
+      .jk-scale-demo-note{font-size:12px;line-height:1.45;margin:10px 0 0;padding:8px 10px;border:1.5px dashed var(--color-primary,#a3241b);border-radius:3px;background:rgba(163,36,27,.06)}
+      .jk-scale-models{font-size:11px;margin:8px 0 0;color:rgba(27,26,23,.6)}
     `;
     document.head.appendChild(st);
   }
@@ -319,7 +363,12 @@
         <label class="jk-scale-opt"><input type="checkbox" id="jk-scale-yield" checked> Fill yield from the scale during the shot</label>
       </div>
       <div class="jk-scale-msg" id="jk-scale-msg"></div>
-      <button type="button" class="jk-scale-more" id="jk-scale-all">Don't see your scale? Show all Bluetooth devices</button>`;
+      <div class="jk-scale-links">
+        <button type="button" class="jk-scale-more" id="jk-scale-all">Don't see your scale? Show all Bluetooth devices</button>
+        <button type="button" class="jk-scale-more" id="jk-scale-demo">No scale? Try a demo scale</button>
+      </div>
+      <p class="jk-scale-demo-note" id="jk-scale-demo-note" hidden>Demo mode: this is a pretend scale, not a real reading. A pretend shot starts in about 5 seconds and the timer starts on first drips. Tap Stop when it finishes, or Tare to run it again.</p>
+      <p class="jk-scale-models">Works with Timemore, Felicita, Decent, Bookoo and Varia Aku scales.</p>`;
     const after = $("ai-pour") || card;
     after.insertAdjacentElement("afterend", box);
 
@@ -336,7 +385,6 @@
       msg.textContent = "Bluetooth scales work in Chrome on Android and on computers. iPhone browsers don't allow it yet.";
       $("jk-scale-connect").disabled = true;
       $("jk-scale-all").hidden = true;
-      return;
     }
 
     const doConnect = async (showAll) => {
@@ -348,6 +396,7 @@
     };
     $("jk-scale-connect").addEventListener("click", () => doConnect(false));
     $("jk-scale-all").addEventListener("click", () => doConnect(true));
+    $("jk-scale-demo").addEventListener("click", () => { msg.textContent = ""; armed = true; connectDemo(); });
     $("jk-scale-tare").addEventListener("click", () => { tare().catch(() => {}); armed = true; });
     $("jk-scale-dose").addEventListener("click", () => {
       if (state.weight != null && state.weight > 0) setField($("livepull-dose"), state.weight.toFixed(1));
@@ -370,7 +419,11 @@
     JKScale.on(() => {
       box.classList.toggle("off", !state.connected);
       $("jk-scale-connect").textContent = state.connecting ? "Connecting…" : state.connected ? "Disconnect" : "⚖️ Connect scale";
-      $("jk-scale-all").hidden = state.connected;
+      const isDemo = !!(state.driver && state.driver.demo);
+      $("jk-scale-all").hidden = state.connected || !state.supported;
+      $("jk-scale-demo").hidden = state.connected;
+      $("jk-scale-demo-note").hidden = !isDemo;
+      $("jk-scale-connect").disabled = !state.supported && !state.connected;
       $("jk-scale-name").textContent = state.connected ? state.name : "";
       if (!state.connected) {
         if (state.error) { msg.className = "jk-scale-msg err"; msg.textContent = state.error; }
