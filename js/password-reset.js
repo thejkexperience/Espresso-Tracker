@@ -43,7 +43,7 @@
       <form id="forgot-form" novalidate>
         <div class="field">
           <label for="forgot-email">Email</label>
-          <input type="email" id="forgot-email" required autocomplete="email" />
+          <input type="text" inputmode="email" autocapitalize="off" spellcheck="false" id="forgot-email" required autocomplete="email" />
         </div>
         <p class="muted" id="forgot-status" style="display:none;font-size:14px;"></p>
         <button type="submit" class="btn btn-primary" id="forgot-send" style="width:100%;margin-top:8px;">Send reset link</button>
