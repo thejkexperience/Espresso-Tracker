@@ -423,7 +423,8 @@ label {
 }
 
 input[type="text"], input[type="number"], input[type="date"], input[type="time"],
-input[type="search"], input[type="url"], select {
+input[type="search"], input[type="url"],
+input[type="email"], input[type="password"], select {
   width: 100%;
   padding: 9px 14px;
   border: 1px solid var(--color-border);
