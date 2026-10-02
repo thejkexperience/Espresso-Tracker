@@ -49,19 +49,20 @@
     grind:   ["photo-1629248990514-c350da4e7bc9", "Nguyen Tong Hai Van", "Grinding straight into the portafilter"],
     dose:    ["photo-1553292218-4892c2e7e1ae", "Zarak Khan", "Whole beans and a fresh dose"],
     wdt:     ["photo-1650097126736-93568f27a163", "Sepehr Moazed", "Grounds after a WDT stir"],
-    tamp:    ["photo-1519927597191-ff2b32f81817", "Noora AlHammadi", "Ready to tamp on a tamping stand"],
+    tamp:    ["photo-1736788262390-6e44dffa029a", "Cemrecan Yurtman", "Tamping level on a tamping mat", "F1MhB-xVazU"],
     screen:  ["photo-1637718231880-cf4634e75c95", "Michael", "A level, tamped puck"],
     brew:    ["photo-1741113937337-1d0273bf941d", "Hogar Barista", "Pulling the shot onto a scale"],
     pf:      ["photo-1608397727084-c116c5e4e63e", "Patrick Untersee", "A bottomless portafilter from below"],
     basket:  ["photo-1664948407540-e888156b5d43", "Michael Boskovski", "A basket's fine holes, up close"],
-    therm:   ["photo-1788537405003-c4547ffad6a7", "Dan Smedley", "A thermometer in the milk pitcher"],
+    therm:   ["photo-1788537405131-56f1f6cc58f9", "Dan Smedley", "A thermometer in the milk pitcher", "9Vl24ce0-QA"],
+    screenB: ["photo-1781038679533-7a5921ddb812", "cafeconcetto", "Placing a puck screen on the puck", "FrubqIMFZJc"],
     stretch: ["photo-1611832567923-99dba19bd155", "Simon Takatomi", "Stretching: tip right at the surface"],
     texture: ["photo-1782419594529-51364f46072a", "Chad Montgomery", "Texturing: wand deeper, milk spinning"],
     flat:    ["photo-1506372023823-741c83b836fe", "Dani", "Flat white"],
     latte:   ["photo-1593443320739-77f74939d0da", "tabitha turner", "Latte"],
     capp:    ["photo-1622240506921-042a4e71c172", "Nuttawut Anek", "Cappuccino"],
   };
-  const credit = (k) => `<span class="lg-credit">Photo: <a href="https://unsplash.com/photos/${PH[k][0].replace("photo-", "")}" target="_blank" rel="noopener">${PH[k][1]}</a> on Unsplash</span>`;
+  const credit = (k) => `<span class="lg-credit">Photo: <a href="https://unsplash.com/photos/${PH[k][3] || PH[k][0].replace("photo-", "")}" target="_blank" rel="noopener">${PH[k][1]}</a> on Unsplash</span>`;
   const photo = (k, w, cls) => `<img class="${cls || "lg-photo"}" src="${UNS(PH[k][0], w)}" alt="${PH[k][2]}" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'">`;
 
   const svgPuckPrep = `
@@ -203,9 +204,14 @@
       return arr.find((g) => g && g.type === type && g.image) || null;
     } catch (_) { return null; }
   }
-  const TOOL_PHOTO = { "Precision basket": "basket", "Milk thermometer": "therm" };
+  const TOOL_PHOTO = { "Precision basket": "basket", "Milk thermometer": "therm", "Tamper": "tamp", "Puck screen": "screenB" };
+  /* Cards left empty on purpose: the owner adds his own photos for these. */
+  const NO_PHOTO = ["WDT tool", "Dosing cup or funnel", "Knock box", "Spray bottle (RDT)"];
+  /* Milk step photos, shown right under their step. */
+  const STEP_PHOTO = { "Stretch (add air)": "stretch", "Texture (spin)": "texture", "Stop at 55 to 65°C": "therm" };
   function toolMedia(name) {
-    const g = PHOTO_TYPE[name] && catalogItem(PHOTO_TYPE[name]);
+    if (NO_PHOTO.includes(name)) return "";
+    const g = !TOOL_PHOTO[name] && PHOTO_TYPE[name] && catalogItem(PHOTO_TYPE[name]);
     if (g) {
       return `<figure class="lg-tool-media photo">
         <img src="${g.image}" alt="${g.name}" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('figure').classList.add('noimg')">
@@ -298,13 +304,11 @@
           <p><b>Why temperature matters.</b> Milk tastes sweetest around 55 to 65°C (130 to 150°F). Hotter than about 70°C, the proteins that hold foam start to break down, the sweetness fades and it can taste cooked.</p>
           <p><b>Why two steps.</b> Air only goes in while the tip is near the surface (stretching). Spinning the milk afterwards (texturing) breaks big bubbles into tiny ones and mixes the foam through the milk.</p>
         </div>
-        <h3 class="lg-h3">Where to hold the wand</h3>
-        ${svgWand}
         <h3 class="lg-h3">Temperature guide</h3>
         ${svgTemp}
         <h3 class="lg-h3">Step by step</h3>
         <ol class="lg-steps">
-          ${MILK_STEPS.map(([t, d]) => `<li><b>${t}.</b> ${d}</li>`).join("")}
+          ${MILK_STEPS.map(([t, d]) => `<li><b>${t}.</b> ${d}${STEP_PHOTO[t] ? `<figure class="lg-step-photo">${photo(STEP_PHOTO[t], 800)}<figcaption>${PH[STEP_PHOTO[t]][2]}. ${credit(STEP_PHOTO[t])}</figcaption></figure>` : ""}</li>`).join("")}
         </ol>
         <h3 class="lg-h3">How much foam for each drink</h3>
         ${svgCups}
@@ -383,6 +387,9 @@
       .lg-prep-body{padding:8px 12px 12px;display:flex;flex-direction:column;gap:3px}
       .lg-fig .lg-photo{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:#e8dcc4}
       .lg-fig-3 .lg-photo{aspect-ratio:1/1}
+      .lg-step-photo{margin:10px 0 4px}
+      .lg-step-photo .lg-photo{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:#e8dcc4;border:1.5px solid var(--color-ink,#1b1a17);border-radius:8px}
+      .lg-step-photo figcaption{margin-top:4px;font-size:12px;color:rgba(27,26,23,.75)}
       .lg-credit{display:block;margin-top:6px;font-family:var(--font-mono,monospace);font-size:10.5px;color:rgba(27,26,23,.6)}
       .lg-credit a{color:inherit}
       .lg-tool-media.realphoto{height:170px;overflow:hidden;background:#e8dcc4}
