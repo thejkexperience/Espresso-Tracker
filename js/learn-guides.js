@@ -206,11 +206,16 @@
   }
   const TOOL_PHOTO = { "Precision basket": "basket", "Milk thermometer": "therm", "Tamper": "tamp", "Puck screen": "screenB" };
   /* Cards left empty on purpose: the owner adds his own photos for these. */
-  const NO_PHOTO = ["WDT tool", "Dosing cup or funnel", "Knock box", "Spray bottle (RDT)"];
+  const NO_PHOTO = ["Knock box"];
+  /* Photos of the owner's own gear. */
+  const LOCAL_PHOTO = { "Milk thermometer": "thermometer", "Puck screen": "puck-screen", "WDT tool": "wdt", "Dosing cup or funnel": "dosing-cup", "Spray bottle (RDT)": "spray-bottle", "Bottomless portafilter": "bottomless" };
   /* Milk step photos, shown right under their step. */
   const STEP_PHOTO = { "Stretch (add air)": "stretch", "Texture (spin)": "texture", "Stop at 55 to 65°C": "therm" };
   function toolMedia(name) {
     if (NO_PHOTO.includes(name)) return "";
+    if (LOCAL_PHOTO[name]) {
+      return `<figure class="lg-tool-media realphoto"><img src="images/tools/${LOCAL_PHOTO[name]}.jpg" alt="${name}" loading="lazy" onerror="this.closest('figure').classList.add('noimg')"><figcaption>Photo: JK Experience</figcaption></figure>`;
+    }
     const g = !TOOL_PHOTO[name] && PHOTO_TYPE[name] && catalogItem(PHOTO_TYPE[name]);
     if (g) {
       return `<figure class="lg-tool-media photo">
