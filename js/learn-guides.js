@@ -43,6 +43,27 @@
   const ART = window.LG_ART;
   const INK = "currentColor";
 
+  /* Real photos (Unsplash, free license), credited on each picture. */
+  const UNS = (id, w) => `https://images.unsplash.com/${id}?w=${w || 700}&q=75&auto=format&fit=crop`;
+  const PH = {
+    grind:   ["photo-1629248990514-c350da4e7bc9", "Nguyen Tong Hai Van", "Grinding straight into the portafilter"],
+    dose:    ["photo-1553292218-4892c2e7e1ae", "Zarak Khan", "Whole beans and a fresh dose"],
+    wdt:     ["photo-1650097126736-93568f27a163", "Sepehr Moazed", "Grounds after a WDT stir"],
+    tamp:    ["photo-1519927597191-ff2b32f81817", "Noora AlHammadi", "Ready to tamp on a tamping stand"],
+    screen:  ["photo-1637718231880-cf4634e75c95", "Michael", "A level, tamped puck"],
+    brew:    ["photo-1741113937337-1d0273bf941d", "Hogar Barista", "Pulling the shot onto a scale"],
+    pf:      ["photo-1608397727084-c116c5e4e63e", "Patrick Untersee", "A bottomless portafilter from below"],
+    basket:  ["photo-1664948407540-e888156b5d43", "Michael Boskovski", "A basket's fine holes, up close"],
+    therm:   ["photo-1788537405003-c4547ffad6a7", "Dan Smedley", "A thermometer in the milk pitcher"],
+    stretch: ["photo-1611832567923-99dba19bd155", "Simon Takatomi", "Stretching: tip right at the surface"],
+    texture: ["photo-1782419594529-51364f46072a", "Chad Montgomery", "Texturing: wand deeper, milk spinning"],
+    flat:    ["photo-1506372023823-741c83b836fe", "Dani", "Flat white"],
+    latte:   ["photo-1593443320739-77f74939d0da", "tabitha turner", "Latte"],
+    capp:    ["photo-1622240506921-042a4e71c172", "Nuttawut Anek", "Cappuccino"],
+  };
+  const credit = (k) => `<span class="lg-credit">Photo: <a href="https://unsplash.com/photos/${PH[k][0].replace("photo-", "")}" target="_blank" rel="noopener">${PH[k][1]}</a> on Unsplash</span>`;
+  const photo = (k, w, cls) => `<img class="${cls || "lg-photo"}" src="${UNS(PH[k][0], w)}" alt="${PH[k][2]}" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'">`;
+
   const svgPuckPrep = `
   <ol class="lg-prep">
     ${[
@@ -52,16 +73,20 @@
       ["Tamp", "Press level and firm, once.", "tamp"],
       ["Screen", "Optional puck screen on top.", "screen"],
       ["Brew", "Lock in, start, and weigh the yield.", "brew"],
-    ].map(([t, s, k], i) => `<li>${ART.stepIcon(k)}<span class="lg-prep-n">${i + 1}</span><b>${t}</b><small>${s}</small></li>`).join("")}
-  </ol>`;
+    ].map(([t, s, k], i) => `<li>${photo(k, 500, "lg-prep-img")}<div class="lg-prep-body"><span class="lg-prep-n">${i + 1}</span><b>${t}</b><small>${s}</small></div></li>`).join("")}
+  </ol>
+  <p class="muted lg-note">Photos: ${["grind", "dose", "wdt", "tamp", "screen", "brew"].map((k) => PH[k][1]).join(", ")} on Unsplash.</p>`;
 
-  const svgPortafilter = ART.portafilter();
+  const svgPortafilter = `
+  <div class="lg-fig-grid">
+    <figure class="lg-fig">${photo("pf", 800)}<figcaption><b>Under the shot.</b> Seen through a bottomless portafilter, coffee leaves the basket through hundreds of tiny holes. An even, single stream means the water went through the puck evenly. ${credit("pf")}</figcaption></figure>
+    <figure class="lg-fig">${photo("screen", 800)}<figcaption><b>The layers.</b> From the top: the machine's shower screen spreads the water, then an optional puck screen, then the tamped puck, then the basket and its holes, then the spouts. ${credit("screen")}</figcaption></figure>
+  </div>`;
 
-  const pitcher = (k) => ART.pitcher(!!k);
   const svgWand = `
   <div class="lg-fig-grid">
-    <figure class="lg-fig">${pitcher(0)}<figcaption><b>Step 1: Stretch.</b> Tip just under the surface. Listen for a soft tss tss. Air goes in and the milk grows.</figcaption></figure>
-    <figure class="lg-fig">${pitcher(1)}<figcaption><b>Step 2: Texture.</b> Tip about 1 cm deeper and off center. The milk spins in a whirlpool and the bubbles get tiny.</figcaption></figure>
+    <figure class="lg-fig">${photo("stretch", 800)}<figcaption><b>Step 1: Stretch.</b> Tip just under the surface. Listen for a soft tss tss. Air goes in and the milk grows. ${credit("stretch")}</figcaption></figure>
+    <figure class="lg-fig">${photo("texture", 800)}<figcaption><b>Step 2: Texture.</b> Tip about 1 cm deeper and off center. The milk spins in a whirlpool and the bubbles get tiny. ${credit("texture")}</figcaption></figure>
   </div>`;
 
   const svgTemp = `
@@ -83,11 +108,10 @@
 
   const svgCups = `
   <div class="lg-fig-grid lg-fig-3">
-    <figure class="lg-fig">${ART.cup("flat")}<figcaption><b>Flat white</b> 5 to 6 oz. Thin foam, about 0.5 cm.</figcaption></figure>
-    <figure class="lg-fig">${ART.cup("latte")}<figcaption><b>Latte</b> 8 to 12 oz. About 1 cm of foam.</figcaption></figure>
-    <figure class="lg-fig">${ART.cup("capp")}<figcaption><b>Cappuccino</b> 5 to 6 oz. 1.5 to 2 cm of foam.</figcaption></figure>
-  </div>
-  <p class="muted lg-note">Darkest layer is espresso, brown is steamed milk, white is foam.</p>`;
+    <figure class="lg-fig">${photo("flat", 600)}<figcaption><b>Flat white</b> 5 to 6 oz. Thin foam, about 0.5 cm. ${credit("flat")}</figcaption></figure>
+    <figure class="lg-fig">${photo("latte", 600)}<figcaption><b>Latte</b> 8 to 12 oz. About 1 cm of foam. ${credit("latte")}</figcaption></figure>
+    <figure class="lg-fig">${photo("capp", 600)}<figcaption><b>Cappuccino</b> 5 to 6 oz. 1.5 to 2 cm of foam. ${credit("capp")}</figcaption></figure>
+  </div>`;
 
   /* ---------------- content ---------------- */
   const TOOLS = [
@@ -179,15 +203,19 @@
       return arr.find((g) => g && g.type === type && g.image) || null;
     } catch (_) { return null; }
   }
+  const TOOL_PHOTO = { "Precision basket": "basket", "Milk thermometer": "therm" };
   function toolMedia(name) {
     const g = PHOTO_TYPE[name] && catalogItem(PHOTO_TYPE[name]);
-    const art = ART.TOOL_ART[name];
     if (g) {
       return `<figure class="lg-tool-media photo">
         <img src="${g.image}" alt="${g.name}" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('figure').classList.add('noimg')">
         <figcaption>${g.name}${g.imageCredit ? ` · ${g.imageCredit}` : ""}</figcaption></figure>`;
     }
-    return art ? `<figure class="lg-tool-media">${art()}</figure>` : "";
+    const k = TOOL_PHOTO[name];
+    if (k) {
+      return `<figure class="lg-tool-media realphoto">${photo(k, 600)}<figcaption>Photo: ${PH[k][1]} on Unsplash</figcaption></figure>`;
+    }
+    return "";
   }
 
   /* ---------------- render ---------------- */
@@ -222,7 +250,7 @@
         <h3 class="lg-h3">How a shot is prepped</h3>
         ${svgPuckPrep}
         <h3 class="lg-h3">What is inside the portafilter</h3>
-        <div class="lg-pf-wrap">${svgPortafilter}</div>
+        ${svgPortafilter}
         <div class="lg-tool-grid">
           ${TOOLS.map((t) => `
             <article class="lg-tool">
@@ -350,6 +378,16 @@
       .lg-tool-media.photo img{max-width:88%;max-height:140px;object-fit:contain}
       .lg-tool-media.photo figcaption{position:absolute;left:6px;bottom:4px;right:6px;font-family:var(--font-mono,monospace);font-size:9.5px;color:rgba(27,26,23,.55);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
       .lg-tool-media.noimg{display:none}
+      .lg-prep li{padding:0;overflow:hidden}
+      .lg-prep-img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border-bottom:1.5px solid var(--color-ink,#1b1a17);background:#e8dcc4}
+      .lg-prep-body{padding:8px 12px 12px;display:flex;flex-direction:column;gap:3px}
+      .lg-fig .lg-photo{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:#e8dcc4}
+      .lg-fig-3 .lg-photo{aspect-ratio:1/1}
+      .lg-credit{display:block;margin-top:6px;font-family:var(--font-mono,monospace);font-size:10.5px;color:rgba(27,26,23,.6)}
+      .lg-credit a{color:inherit}
+      .lg-tool-media.realphoto{height:170px;overflow:hidden;background:#e8dcc4}
+      .lg-tool-media.realphoto .lg-photo{width:100%;height:100%;object-fit:cover;display:block}
+      .lg-tool-media.realphoto figcaption{position:absolute;left:6px;bottom:4px;right:6px;font-family:var(--font-mono,monospace);font-size:9.5px;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.7)}
       .lg-step-art{width:52px;height:52px;display:block;margin:0 auto 4px}
       .lg-tool{background:var(--color-surface,#fbf7ee);border:1.5px solid var(--color-ink,#1b1a17);border-radius:3px;padding:14px;overflow:hidden}
       .lg-tool p{margin:8px 0 0;font-size:14px;line-height:1.5}
