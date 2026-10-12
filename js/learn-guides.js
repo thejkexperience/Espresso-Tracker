@@ -251,7 +251,7 @@
     root.id = "lg-root";
     root.innerHTML = `
       <nav class="lg-jump" aria-label="Learn sections">
-        <a href="#lg-tools">🧰 Tools</a><a href="#lg-upgrades">⬆️ Upgrades</a><a href="#lg-milk">🥛 Milk</a>
+        <a href="#lg-tools">🧰 Tools</a><a href="#lg-upgrades">⬆️ Upgrades</a><a href="#lg-milk">🥛 Milk</a><a href="#lg-portable">🚶 Portable</a>
         <a href="#lg-videos">▶ Videos</a><a href="#lg-history">📜 History</a><a href="#lg-drinks">☕ Drinks</a>
       </nav>
 
@@ -328,6 +328,27 @@
         </div>
         <h3 class="lg-h3">Watch it done</h3>
         ${videoRow(V.milkLance, V.milkEmilee, V.milkWLL, V.latteArt)}
+      </section>
+
+      <section class="section lg-section" id="lg-portable">
+        <h2>Hand grinders and portable machines</h2>
+        <p class="muted">No outlet, no problem. A hand grinder and a portable espresso maker can make real espresso at home, at work or on the trail. The gear is simple, but a few habits make the difference.</p>
+        <h3 class="lg-h3">Dialing in a hand grinder</h3>
+        <ol class="lg-steps">
+          <li><b>Find zero.</b> Turn the adjustment gently until the burrs just touch, then stop. Do not force it, because burrs that grind against each other wear out. Call that your zero.</li>
+          <li><b>Count clicks.</b> Most hand grinders adjust in clicks, so write down the number, like "90 clicks" or "2 turns and 5 numbers". Your tracker's grind size field is made for this.</li>
+          <li><b>Start near a known spot.</b> Brands publish rough espresso ranges in their manuals. Begin there, then change only a few clicks at a time.</li>
+          <li><b>Change one thing.</b> If the shot runs too fast, go finer by a few clicks. If it runs too slow, go coarser. Keep the dose the same while you dial in.</li>
+          <li><b>Grind the same way each time.</b> Turn the handle at a steady pace. A very uneven pace can change how much fine powder you make.</li>
+        </ol>
+        <h3 class="lg-h3">What is different about portable machines</h3>
+        <ul class="lg-list">
+          <li><b>You bring the heat.</b> Most portables do not heat water. Use water just off the boil, and preheat the machine with a splash of hot water if you can.</li>
+          <li><b>You are the pump.</b> Your hands set the pressure. Press or pump smoothly and try to keep the same effort from start to finish.</li>
+          <li><b>Smaller baskets, smaller doses.</b> Many portables use a 52mm basket and take about 18g or less, so follow the recipe for your machine and not a 58mm recipe.</li>
+          <li><b>Log the details.</b> Note your water temperature and how long you pressed. These two numbers explain most shot to shot differences.</li>
+        </ul>
+        <p class="muted">Browse hand grinders and portable machines in Gear, then log your shots in Brew Log. The tracker will show you what you changed between shots.</p>
       </section>
 
       <section class="section lg-section" id="lg-videos">
