@@ -44,15 +44,19 @@
         <div class="field-grid">
           <div class="field">
             <label for="machine-type">Espresso machine</label>
-            <input type="text" id="machine-type" placeholder="e.g. Breville Bambino Plus" />
+            <input type="text" id="machine-type" list="machine-list" placeholder="e.g. Breville Bambino Plus" />
+            <datalist id="machine-list"></datalist>
+            <p class="muted" id="machine-hint" hidden style="margin-top:6px">Portable machine tip: also note your water temperature and how long you pumped or pressed in the notes.</p>
           </div>
           <div class="field">
             <label for="grinder-type">Grinder</label>
-            <input type="text" id="grinder-type" placeholder="e.g. Baratza Encore ESP" />
+            <input type="text" id="grinder-type" list="grinder-list" placeholder="e.g. Baratza Encore ESP" />
+            <datalist id="grinder-list"></datalist>
           </div>
           <div class="field">
             <label for="grind-size">Grind size setting</label>
             <input type="text" id="grind-size" placeholder="e.g. 12, or 'fine'" />
+            <p class="muted" id="grind-hint" hidden style="margin-top:6px">Hand grinder tip: count clicks from zero and write it down, like "90 clicks" or "2 turns and 5 numbers". Back off to zero gently so you do not damage the burrs.</p>
           </div>
           <div class="field">
             <label for="tools-used">Tools used</label>
@@ -238,5 +242,29 @@
   <script src="js/cloud-data.js"></script>
   <script src="js/brew-log.js"></script>
   <script src="js/pwa.js"></script>
+  <script>
+    /* Hand grinder and portable machine helpers */
+    (function () {
+      if (typeof GEAR_CATALOG === "undefined") return;
+      var fill = function (id, items) {
+        var dl = document.getElementById(id);
+        if (!dl) return;
+        items.forEach(function (g) { var o = document.createElement("option"); o.value = g.name; dl.appendChild(o); });
+      };
+      fill("grinder-list", GEAR_CATALOG.filter(function (g) { return g.category === "Grinder"; }));
+      fill("machine-list", GEAR_CATALOG.filter(function (g) { return g.category === "Machine"; }));
+      var handRe = /hand|manual|1zpresso|comandante|timemore|kinu|c40|k-ultra|jx-pro|chestnut|cafflano/i;
+      var portRe = /portable|picopresso|nanopresso|flair|cafflano|staresso|handpresso|hand pump|lever/i;
+      var gi = document.getElementById("grinder-type"), mi = document.getElementById("machine-type");
+      var gh = document.getElementById("grind-hint"), mh = document.getElementById("machine-hint");
+      var upd = function () {
+        if (gh && gi) gh.hidden = !handRe.test(gi.value);
+        if (mh && mi) mh.hidden = !portRe.test(mi.value);
+      };
+      if (gi) { gi.addEventListener("input", upd); gi.addEventListener("change", upd); }
+      if (mi) { mi.addEventListener("input", upd); mi.addEventListener("change", upd); }
+      setTimeout(upd, 800);
+    })();
+  </script>
 </body>
 </html>
